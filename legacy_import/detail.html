@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="referrer" content="no-referrer">
+    <title>资源详情 | Myself 3D</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --bg-color: #fdfbf7; --text-main: #333; --text-sub: #666; --primary-color: #007AFF; 
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08); 
+            --card-bg: #fff; --pill-bg: rgba(255, 255, 255, 0.65);
+            --border-color: rgba(255, 255, 255, 0.5);
+            --modal-bg: #fff;
+        }
+        
+        [data-theme="dark"] {
+            --bg-color: #0a0a0a; --text-main: #f0f0f0; --text-sub: #aaa; --primary-color: #0A84FF;
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
+            --card-bg: #1c1c1e; --pill-bg: rgba(28, 28, 30, 0.65);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --modal-bg: #1c1c1e;
+        }
+
+        html { height: 100%; overflow: hidden; }
+        body { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            font-family: 'Inter', sans-serif; color: var(--text-main); 
+            background-color: var(--bg-color); 
+            background-image: radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.05) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 85, 0.05) 0px, transparent 50%); 
+            overflow-y: auto; overscroll-behavior: none; touch-action: pan-y; -webkit-tap-highlight-color: transparent; 
+            padding-bottom: 120px; box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        [data-theme="dark"] body { background-image: radial-gradient(at 0% 0%, rgba(10, 132, 255, 0.1) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 69, 58, 0.1) 0px, transparent 50%); }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 20px; }
+        .top-hud { position: fixed; top: 20px; right: 20px; z-index: 990; }
+        .glass-pill { background: var(--pill-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 30px; padding: 5px 8px; display: flex; gap: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        .nav-btn-icon { background: none; border: none; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-main); transition: 0.2s; font-weight: bold; font-size: 13px; padding: 0; }
+        .nav-btn-icon:hover { background: rgba(122,122,122,0.1); color: var(--primary-color); }
+        .nav-btn-icon img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--card-bg); }
+        
+        .layout-wallpaper { display: grid; grid-template-columns: 380px 1fr; gap: 40px; }
+        .layout-wallpaper .cover-box { position: sticky; top: 40px; height: fit-content; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-soft); background: var(--card-bg); border: 6px solid var(--card-bg); transition: transform 0.3s ease; cursor: zoom-in; }
+        .layout-wallpaper .cover-box:hover { transform: scale(1.02); }
+        .layout-article { max-width: 720px; margin: 0 auto; display: block; }
+        .layout-article .cover-box { display: none !important; }
+        .cover-img { width: 100%; display: block; border-radius: 18px; }
+        .info-column { display: flex; flex-direction: column; width: 100%; }
+        
+        .title { font-size: 32px; font-weight: 800; margin: 0 0 15px 0; line-height: 1.2; color: var(--text-main); }
+        .meta { display: flex; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); color: var(--text-sub); font-size: 13px; font-weight: 500; }
+        .meta i { color: var(--primary-color); margin-right: 5px; }
+        
+        .desc-box { font-size: 16px; line-height: 1.8; color: var(--text-main); margin-bottom: 40px; white-space: pre-wrap; opacity: 0.9; }
+        .desc-box iframe { max-width: 100%; display: block; margin: 0 auto; background: #000; border-radius: 12px; }
+        
+        .demo-label { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); }
+        .demo-label i { color: var(--primary-color); font-size: 18px; }
+        
+        .action-card { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(25px); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); padding: 35px; border-radius: 24px; margin-top: auto; text-align: center; position: relative; overflow: hidden; transition: all 0.4s; }
+        [data-theme="dark"] .action-card { background: rgba(30, 30, 30, 0.65); }
+        .action-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary-color), #00C6FF); opacity: 0.8; }
+        
+        .btn-unlock-trigger { width: 100%; padding: 16px; border-radius: 16px; border: none; background: linear-gradient(135deg, #1a1a1a, #333); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        [data-theme="dark"] .btn-unlock-trigger { background: linear-gradient(135deg, #0A84FF, #0056b3); }
+        .btn-unlock-trigger:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        
+        .pay-option-row { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .pay-opt { border: 2px solid var(--border-color); border-radius: 16px; padding: 15px; text-align: left; cursor: pointer; transition: 0.2s; position: relative; background: var(--card-bg); color: var(--text-main); }
+        .pay-opt:hover { border-color: var(--primary-color); background: rgba(0,122,255,0.05); }
+        .pay-opt-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .pay-opt-title { font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .balance-info { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-sub); background: rgba(127,127,127,0.1); padding: 8px 10px; border-radius: 8px; margin-top: 8px; }
+        .balance-val { font-weight: bold; font-family: monospace; color: var(--text-main); }
+        .balance-val.low { color: #ff4444; }
+        .price-display { font-size: 14px; font-weight: bold; color: var(--primary-color); }
+        
+        .qr-preview { text-align: center; margin-top: 10px; border-top: 1px dashed var(--border-color); padding-top: 10px; display: none; }
+        .qr-preview img { width: 150px; height: 150px; border: 1px solid var(--border-color); padding: 5px; border-radius: 8px; }
+        .qr-tip { font-size: 12px; color: var(--text-sub); margin-top: 5px; line-height: 1.4; }
+        
+        .upload-row { display: flex; align-items: center; gap: 5px; margin-top: 10px; }
+        .btn-upload-file { flex: 1; padding: 8px; background: rgba(127,127,127,0.1); border: 1px solid var(--border-color); border-radius: 8px; font-size: 12px; color: var(--text-sub); cursor: pointer; text-align: center; }
+        .btn-confirm-pay { padding: 8px 15px; background: var(--text-main); color: var(--bg-color); border-radius: 8px; border: none; font-weight: bold; font-size: 12px; cursor: pointer; }
+
+        .divider { margin: 25px 0; border-top: 1px dashed var(--border-color); position: relative; height: 1px; }
+        .divider span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-color); padding: 0 15px; color: var(--text-sub); font-size: 12px; border-radius: 10px; font-weight: bold; letter-spacing: 1px; }
+        
+        .code-section { margin-top: 5px; }
+        .section-title { display: block; font-size: 12px; color: var(--text-sub); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-code { flex: 1; height: 100%; padding: 0 15px; border: 2px solid var(--border-color); border-radius: 12px; outline: none; background: rgba(127,127,127,0.05); color: var(--text-main); font-weight: 600; font-size: 15px; box-sizing: border-box; transition: 0.2s; text-align: center; }
+        .input-code:focus { border-color: var(--primary-color); background: var(--card-bg); }
+        .btn-code { height: 100%; padding: 0 25px; border-radius: 12px; border: none; background: rgba(0, 122, 255, 0.1); color: var(--primary-color); font-weight: 700; cursor: pointer; font-size: 14px; transition: 0.2s; white-space: nowrap; }
+        .btn-code:hover { background: var(--primary-color); color: #fff; }
+
+        .resource-content { background: rgba(0, 122, 255, 0.05); border: 1px dashed var(--primary-color); padding: 20px; border-radius: 16px; color: var(--primary-color); font-family: monospace; word-break: break-all; font-size: 15px; text-align: left; }
+        
+        .bottom-dock { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; background: var(--pill-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 8px; border-radius: 100px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); z-index: 999; }
+        .dock-btn { display: flex; align-items: center; justify-content: center; height: 44px; padding: 0 20px; border-radius: 22px; text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 14px; transition: 0.2s; white-space: nowrap; cursor: pointer; }
+        .dock-btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+        .dock-btn-home { background: var(--text-main); color: var(--bg-color); width: 44px; height: 44px; padding: 0; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        .pull-tip { position: fixed; bottom: -60px; left: 0; width: 100%; height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-sub); font-size: 12px; font-weight: 600; background: var(--pill-bg); backdrop-filter: blur(10px); z-index: 990; transition: transform 0.1s linear, opacity 0.2s; opacity: 0; border-top: 1px solid var(--border-color); }
+        .pull-tip.visible { opacity: 1; }
+        .pull-tip i { font-size: 16px; margin-bottom: 4px; transition: 0.2s; }
+        .pull-tip.release i { transform: rotate(180deg); color: var(--primary-color); }
+        .pull-tip.release span { color: var(--primary-color); }
+        
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(8px); z-index: 10000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .glass-box { background: var(--modal-bg); padding: 30px; border-radius: 24px; width: 320px; text-align: center; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.2); transform: scale(0.95); transition: transform 0.3s; max-height: 80vh; overflow-y: auto; border: 1px solid var(--border-color); color: var(--text-main); }
+        .modal-overlay.show .glass-box { transform: scale(1); }
+        .close-btn { position: absolute; top: 15px; right: 15px; cursor: pointer; color: var(--text-sub); font-size: 18px; }
+        
+        .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 12px; background: rgba(127,127,127,0.05); color: var(--text-main); outline: none; box-sizing: border-box; font-size: 16px; }
+        .login-btn { width: 100%; padding: 12px; background: var(--text-main); color: var(--bg-color); border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 5px; font-size: 16px; }
+        .switch-link { margin-top: 15px; font-size: 13px; color: var(--text-sub); cursor: pointer; text-decoration: underline; display: block; }
+        .captcha-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .captcha-img { height: 42px; border-radius: 8px; cursor: pointer; border: 1px solid var(--border-color); }
+        
+        .mini-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--card-bg); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .mini-name { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
+        .mini-vip { font-size: 12px; background: #000; color: gold; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 15px; }
+        .mini-stats { display: flex; justify-content: space-around; margin-bottom: 25px; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 15px 0; }
+        .mini-stat-val { font-weight: 800; color: var(--primary-color); font-size: 16px; }
+        .mini-stat-lbl { font-size: 12px; color: var(--text-sub); }
+        .action-btn { padding: 10px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; font-size: 13px; }
+        .btn-checkin { background: rgba(0, 122, 255, 0.1); color: var(--primary-color); }
+        .btn-more { background: var(--text-main); color: var(--bg-color); }
+        .logout-link { display: block; margin-top: 15px; color: #ff4444; font-size: 12px; text-decoration: none; cursor: pointer; }
+        
+        .confirm-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+        .confirm-desc { font-size: 14px; color: var(--text-sub); margin-bottom: 20px; line-height: 1.5; }
+        .confirm-actions { display: flex; gap: 15px; }
+        .btn-ghost { background: rgba(127,127,127,0.1); color: var(--text-sub); flex: 1; padding: 12px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s;}
+        .btn-ghost:hover { background: rgba(127,127,127,0.2); }
+        .btn-primary { background: var(--primary-color); color: #fff; flex: 1; padding: 12px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s;}
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        
+        .setting-checkbox { display:flex; align-items:center; margin-bottom: 15px; font-size: 13px; color: var(--text-sub); cursor: pointer; text-align: left; background: rgba(127,127,127,0.05); padding: 12px; border-radius: 10px; border: 1px solid transparent; transition: 0.2s; }
+        .setting-checkbox:hover { border-color: var(--border-color); background: rgba(127,127,127,0.1); }
+        .setting-checkbox.danger { color: #ff4444; background: rgba(255,68,68,0.05); }
+        
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        #lightbox.show { display: flex; opacity: 1; }
+        #lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        #lightbox-close { position: absolute; top: 30px; right: 30px; color: #fff; font-size: 30px; cursor: pointer; }
+        
+        /* 卡密钱包专属UI */
+        .token-wallet-section { background: rgba(127,127,127,0.05); padding: 20px; border-radius: 16px; text-align: left; border: 1px solid var(--border-color); margin-top: 20px; }
+        .token-select { width: 100%; padding: 12px 15px; border-radius: 8px; border: 2px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 14px; font-weight: bold; margin-bottom: 12px; outline: none; appearance: none; cursor: pointer; }
+        .token-select:focus { border-color: var(--primary-color); }
+        .btn-unlock-token { width: 100%; padding: 12px; background: linear-gradient(135deg, #00C853, #00E676); color: #fff; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 15px; box-shadow: 0 4px 15px rgba(0,200,83,0.3); transition: 0.2s; }
+        .btn-unlock-token:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,200,83,0.4); }
+
+        @media (max-width: 768px) {
+            .top-hud { top: 15px; right: 15px; }
+            .layout-wallpaper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+            .layout-wallpaper .cover-box { position: static; width: 85%; max-width: 320px; border-width: 0; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 0 auto; }
+            .dock-btn { padding: 0 15px; } .dock-btn span { display: none; }
+            .glass-box { padding: 25px 20px; width: 85%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-hud">
+    <div class="nav-controls glass-pill">
+        <button class="nav-btn-icon" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
+        <div style="width:1px;height:12px;background:var(--border-color);margin:0 2px;"></div>
+        <button class="nav-btn-icon" onclick="toggleLang()"><i class="fas fa-globe"></i>&nbsp;<span id="lang-text">CN</span></button>
+        <div style="width:1px;height:12px;background:var(--border-color);margin:0 2px;"></div>
+        <div id="user-area-float"><button class="nav-btn-icon" onclick="showLoginModal()"><i class="fas fa-user-circle"></i></button></div>
+    </div>
+</div>
+
+<div class="container" id="app">
+    <div style="text-align:center;padding:80px;color:var(--text-sub)">
+        <i class="fas fa-circle-notch fa-spin" style="font-size:24px;margin-bottom:10px"></i><br>Loading...
+    </div>
+</div>
+
+<div class="bottom-dock" id="dock">
+    <a id="btn-prev" class="dock-btn disabled"><i class="fas fa-chevron-left"></i> <span>Prev</span></a>
+    <a href="index.html" class="dock-btn dock-btn-home"><i class="fas fa-home"></i></a>
+    <a id="btn-next" class="dock-btn disabled"><i class="fas fa-chevron-right"></i> <span>Next</span></a>
+</div>
+
+<div class="pull-tip" id="pull-tip">
+    <i class="fas fa-arrow-up"></i> 
+    <span id="pull-text">Pull up hard for next</span>
+</div>
+
+<div id="lightbox" onclick="closeLightbox()"><div id="lightbox-close">&times;</div><img id="lightbox-img" src="" onclick="event.stopPropagation()"></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this) closeModal()">
+    <div class="glass-box" id="modal-pay" style="display:none">
+        <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+        <h3 style="margin-top:0;margin-bottom:15px" data-i18n="pay_method">Choose Payment</h3>
+        <div id="pay-options-container" class="pay-option-row"></div>
+    </div>
+
+    <div class="glass-box" id="modal-login" style="display:none">
+        <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+        <h3 style="margin-top:0;margin-bottom:20px" data-i18n="welcome_back">Welcome Back</h3>
+        <input type="text" id="login-u" class="login-input" data-i18n-placeholder="ph_username" placeholder="Username / ID">
+        <input type="password" id="login-p" class="login-input" data-i18n-placeholder="ph_password" placeholder="Password">
+        <button class="login-btn" onclick="doLogin()" data-i18n="btn_signin">Sign In</button>
+        <span class="switch-link" onclick="switchModal('register')" data-i18n="link_no_account">No account? Create one</span>
+    </div>
+    
+    <div class="glass-box" id="modal-register" style="display:none">
+        <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+        <h3 style="margin-top:0;margin-bottom:20px" data-i18n="create_account">Create Account</h3>
+        <input type="text" id="reg-u" class="login-input" data-i18n-placeholder="ph_username" placeholder="Username">
+        <input type="password" id="reg-p" class="login-input" data-i18n-placeholder="ph_password" placeholder="Password">
+        <input type="password" id="reg-p2" class="login-input" data-i18n-placeholder="ph_confirm" placeholder="Confirm Password">
+        
+        <div id="reg-email-area" style="display:none;">
+            <input type="email" id="reg-email" class="login-input" data-i18n-placeholder="ph_email" placeholder="邮箱地址 (Email)">
+            <div class="captcha-row">
+                <input type="text" id="reg-email-code" class="login-input" data-i18n-placeholder="ph_email_code" placeholder="邮箱验证码" style="margin-bottom:0">
+                <button id="btn-send-code" onclick="sendEmailCode()" style="width:130px; border-radius:12px; background:var(--primary-color); color:#fff; border:none; cursor:pointer; font-weight:bold; font-size:13px; transition:0.2s;" data-i18n="btn_get_code">获取验证码</button>
+            </div>
+        </div>
+        
+        <div id="reg-captcha-area" style="display:none;">
+            <div class="captcha-row">
+                <input type="text" id="reg-code" class="login-input" data-i18n-placeholder="ph_code" placeholder="Code" style="margin-bottom:0">
+                <img src="api/captcha.php" class="captcha-img" onclick="this.src='api/captcha.php?'+Math.random()" title="Tap to refresh">
+            </div>
+        </div>
+
+        <button class="login-btn" onclick="doRegister()" data-i18n="btn_signup">Sign Up</button>
+        <span class="switch-link" onclick="switchModal('login')" data-i18n="link_has_account">Already have an account? Sign In</span>
+    </div>
+    
+    <div class="glass-box" id="modal-profile" style="display:none">
+        <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+        <img src="static/default_avatar.png" id="mini-avatar" class="mini-avatar">
+        <div class="mini-name" id="mini-name">Loading...</div>
+        <div class="mini-vip" id="mini-vip">VIP</div>
+        <div class="mini-stats">
+            <div><div class="mini-stat-val" id="mini-balance">0.00</div><div class="mini-stat-lbl" data-i18n="balance">Balance</div></div>
+            <div><div class="mini-stat-val" id="mini-points">0</div><div class="mini-stat-lbl" data-i18n="points">Points</div></div>
+        </div>
+        <div class="mini-actions">
+            <button class="action-btn btn-checkin" onclick="doCheckin()" data-i18n="btn_checkin">Check-in</button>
+            <button class="action-btn btn-more" onclick="window.location.href='user.html'" data-i18n="btn_more">User Center</button>
+        </div>
+        <a class="logout-link" onclick="doLogout()" data-i18n="btn_logout">Log out</a>
+    </div>
+
+    <div class="glass-box" id="modal-swipe-hint" style="display:none">
+        <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+        <div class="confirm-title" data-i18n="hint_title">Quick Navigation</div>
+        <div class="confirm-desc" data-i18n="hint_desc">Do you want to jump to the next post?</div>
+        <label class="setting-checkbox">
+            <input type="checkbox" id="chk-auto-jump" style="margin-right: 10px;">
+            <span data-i18n="hint_remember">Don't ask again (Auto jump next time)</span>
+        </label>
+        <label class="setting-checkbox danger">
+            <input type="checkbox" id="chk-disable-jump" style="margin-right: 10px;">
+            <span data-i18n="hint_disable">Too sensitive! Disable swipe jump forever</span>
+        </label>
+        <div class="confirm-actions">
+            <button class="btn-ghost" onclick="closeModal()" data-i18n="btn_cancel">Cancel</button>
+            <button class="btn-primary" onclick="confirmSwipe()" data-i18n="btn_continue">Continue</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const id = new URLSearchParams(window.location.search).get('id');
+    let isEn = false, nextArticleId = null, currentType = '', siteConfig = null;
+    let articleData = { price: 0, currency: '', priceUsd: 0, userBalance: 0, exchangeRate: 7.2, title: '', has_verify_code: false };
+    let gateways = []; 
+
+    if (new URLSearchParams(window.location.search).get('pay') === 'success') {
+        alert("Payment Successful! / 支付成功！");
+        window.history.replaceState({}, document.title, window.location.pathname + "?id=" + id);
+    }
+
+    const i18n = {
+        "btn_login": ["Login", "登录"], "welcome_back": ["Welcome Back", "欢迎回来"], "create_account": ["Create Account", "创建账号"],
+        "btn_signin": ["Sign In", "登 录"], "btn_signup": ["Sign Up", "注 册"], "link_no_account": ["No account? Create one", "没有账号？去注册"],
+        "link_has_account": ["Already have an account? Sign In", "已有账号？去登录"], "ph_username": ["Username / ID", "用户名 / ID"],
+        "ph_password": ["Password", "密码"], "ph_confirm": ["Confirm Password", "确认密码"], "ph_code": ["Code", "验证码"],
+        "ph_email": ["Email", "邮箱地址"], "ph_email_code": ["Email Code", "邮箱验证码"], "btn_get_code": ["Get Code", "获取验证码"],
+        "balance": ["Balance", "余额"], "points": ["Points", "积分"], "btn_checkin": ["Check-in", "签到"], "btn_more": ["User Center", "个人中心"],
+        "btn_logout": ["Log out", "退出登录"], "hint_title": ["Quick Navigation", "快捷导航"],
+        "hint_desc": ["Do you want to jump to the next post?", "检测到用力上滑手势，是否跳转到下一篇？"],
+        "hint_remember": ["Don't ask again (Auto jump)", "下次不再询问 (顺畅自动跳转)"],
+        "hint_disable": ["Too sensitive! Disable pull-to-jump forever", "太灵敏了，永久关闭上滑跳转功能"],
+        "btn_cancel": ["Cancel", "取消"], "btn_stay": ["Stay", "保持不动"], "btn_continue": ["Continue", "确认跳转"],
+        "pay_method": ["Choose Payment", "选择支付方式"], "pay_balance": ["Balance Pay", "余额支付"], "current_balance": ["Your Balance", "您的余额"],
+        "pay_direct_desc": ["Direct Pay", "直接支付"], "unlock_now": ["Unlock Now", "立即解锁"],
+        "insufficient": ["Insufficient", "余额不足 (去充值)"], "need_pay": ["Price", "需支付"], "scan_tip": ["Scan QR code to pay, then upload proof.", "请扫码支付，然后点击下方按钮上传截图凭证。"],
+        "submit_proof": ["Upload Proof", "提交凭证"], "select_image": ["Select Image", "选择图片"],
+        "dl_free": ["Download Wallpaper (Free)", "下载静态壁纸 (免费)"],
+        "dl_paid": ["Download Wallpaper (Paid)", "下载静态壁纸 (付费解锁)"],
+        "btn_copy": ["Copy Link", "一键复制"],
+        "pwd_label": ["Pwd/Code: ", "提取码/密码: "],
+        "copied": ["Copied", "已复制"]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initTheme(); initLang(); checkSession(); 
+        if(!id) { 
+            document.getElementById('app').innerHTML = '<div style="text-align:center;padding:50px;color:var(--text-sub)">未指定资源ID (No ID)</div>'; 
+            return; 
+        }
+        loadDetail(); loadConfig();
+        document.addEventListener('keydown', (e) => {
+            if(e.key==='ArrowLeft') document.getElementById('btn-prev').click();
+            if(e.key==='ArrowRight') document.getElementById('btn-next').click();
+        });
+    });
+
+    function initTheme() {
+        const saved = localStorage.getItem('site_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', saved);
+        updateThemeIcon(saved);
+    }
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme');
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('site_theme', newTheme);
+        updateThemeIcon(newTheme);
+    }
+    function updateThemeIcon(theme) {
+        const icon = document.getElementById('theme-icon');
+        if(icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    function initLang(){ const c=document.cookie.split(';');let h=false;for(let i of c){let[k,v]=i.trim().split('=');if(k==='site_lang'){isEn=(v==='en');h=true;}} if(!h){const l=navigator.language||navigator.userLanguage;if(l&&!l.startsWith('zh'))isEn=true;document.cookie="site_lang="+(isEn?'en':'cn')+";path=/;max-age=31536000";} updateUI(); }
+    function toggleLang(){ isEn=!isEn; document.cookie="site_lang="+(isEn?'en':'cn')+";path=/;max-age=31536000"; updateUI(); loadDetail(); renderPayModalContent(); }
+    
+    function updateUI(){
+        document.getElementById('lang-text').innerText = isEn ? 'EN' : 'CN';
+        const idx = isEn ? 0 : 1;
+        document.querySelectorAll('[data-i18n]').forEach(el => { const k=el.getAttribute('data-i18n'); if(i18n[k]) el.innerHTML=i18n[k][idx]; });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const k=el.getAttribute('data-i18n-placeholder'); if(i18n[k]) el.placeholder=i18n[k][idx]; });
+        const prev=document.querySelector('#btn-prev span'), next=document.querySelector('#btn-next span');
+        if(prev) prev.innerText=isEn?'Prev':'上一篇'; if(next) next.innerText=isEn?'Next':'下一篇';
+        document.getElementById('pull-text').innerText=isEn?'Pull up hard for next':'继续用力上滑查看下一篇';
+    }
+
+    function loadConfig() { 
+        fetch('api/get_config.php').then(r=>r.json()).then(res => { 
+            if(res.code===200) { 
+                siteConfig = res.data;
+                gateways = siteConfig.payment_gateways || []; 
+                applySiteBasics(siteConfig.social);
+            } 
+        }); 
+    }
+
+    function applySiteBasics(cfg) {
+        if (!cfg) return;
+        let baseName = cfg.site_name || 'Myself 3D';
+        if (articleData && articleData.title) { document.title = articleData.title + ' | ' + baseName; } 
+        else { document.title = baseName; }
+        if (cfg.site_favicon) {
+            let link = document.querySelector("link[rel~='icon']");
+            if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+            link.href = cfg.site_favicon;
+        }
+    }
+
+    function showLoginModal() { switchModal('login'); openOverlay(); }
+    function showProfileModal() { switchModal('profile'); openOverlay(); }
+    function openPayModal() { switchModal('pay'); openOverlay(); renderPayModalContent(); }
+
+    function renderPayModalContent() {
+        const container = document.getElementById('pay-options-container');
+        if(!container) return;
+        let html = '';
+        const canPay = articleData.userBalance >= articleData.price;
+        const balanceAction = canPay ? `doUnlock('balance')` : `window.location.href='user.html'`;
+        const balanceTip = canPay ? '' : `<span style="color:#ff4444;font-size:12px;margin-left:5px">(${i18n['insufficient'][isEn?0:1]})</span>`;
+        const displayPrice = isEn ? `$${articleData.priceUsd}` : `¥${articleData.price}`;
+        
+        html += `
+        <div class="pay-opt" onclick="${balanceAction}" style="${canPay?'':'opacity:0.8'}">
+            <div class="pay-opt-head">
+                <div class="pay-opt-title"><i class="fas fa-wallet" style="color:#007AFF"></i> <span>${i18n['pay_balance'][isEn?0:1]}</span>${balanceTip}</div>
+            </div>
+            <div class="balance-info">
+                <div>${i18n['need_pay'][isEn?0:1]}: <span class="price-display">${displayPrice}</span></div>
+                <div>${i18n['current_balance'][isEn?0:1]}: <span class="balance-val ${canPay?'':'low'}">${articleData.userBalance} CNY</span></div>
+            </div>
+        </div>`;
+
+        gateways.forEach(g => {
+            if (g.visible_lang === 'cn' && isEn) return;
+            if (g.visible_lang === 'en' && !isEn) return;
+
+            let cfg = {}; try{cfg=JSON.parse(g.config)}catch(e){cfg=g.config;}
+            if (g.type === 'paypal_api') {
+                html += `
+                <div class="pay-opt" onclick="directPay(this)">
+                    <div class="pay-opt-head"><div class="pay-opt-title"><i class="fab fa-paypal" style="color:#003087"></i> PayPal</div><div class="price-display">$${articleData.priceUsd}</div></div>
+                    <div style="font-size:12px;color:var(--text-sub);margin-top:5px">${i18n['pay_direct_desc'][isEn?0:1]}</div>
+                </div>`;
+            } else {
+                const qrUrl = cfg.qr_url ? cfg.qr_url.replace(/^\.\.\//,'') : '';
+                if(qrUrl) {
+                    html += `
+                    <div class="pay-opt" onclick="toggleQr('qr-${g.id}')">
+                        <div class="pay-opt-head"><div class="pay-opt-title"><i class="fas fa-qrcode"></i> ${g.name}</div><div class="price-display">¥${articleData.price}</div></div>
+                        <div id="qr-${g.id}" class="qr-preview" onclick="event.stopPropagation()">
+                            <img src="${qrUrl}"><div class="qr-tip">${i18n['scan_tip'][isEn?0:1]}</div>
+                            <div class="upload-row"><label class="btn-upload-file"><i class="fas fa-image"></i> ${i18n['select_image'][isEn?0:1]}<input type="file" id="file-${g.id}" accept="image/*" style="display:none" onchange="handleProofSelect(this)"></label><button class="btn-confirm-pay" onclick="submitDirectProof(${id}, 'file-${g.id}', ${g.id})">${i18n['submit_proof'][isEn?0:1]}</button></div>
+                            <div id="file-name-${g.id}" style="font-size:10px;color:var(--text-sub);margin-top:2px"></div>
+                        </div>
+                    </div>`;
+                }
+            }
+        });
+        container.innerHTML = html;
+    }
+
+    function toggleQr(id) { const el = document.getElementById(id); if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block'; }
+    function handleProofSelect(input) { if(input.files && input.files[0]) { document.getElementById('file-name-' + input.id.split('-')[1]).innerText = input.files[0].name; } }
+
+    function submitDirectProof(articleId, fileInputId, gatewayId) {
+        const fileInput = document.getElementById(fileInputId);
+        const file = fileInput.files[0];
+        if (!file) { alert(isEn ? "Please select a proof image first." : "请先选择凭证图片"); return; }
+        const btn = fileInput.parentElement.nextElementSibling; const oldText = btn.innerText; btn.innerText = "..."; btn.disabled = true;
+        const fd = new FormData(); fd.append('article_id', articleId); fd.append('proof', file); fd.append('currency', isEn ? 'USD' : 'CNY');
+        if(gatewayId) fd.append('gateway_id', gatewayId);
+        fetch('api/pay.php?action=submit_proof', { method:'POST', body:fd }).then(r=>r.json()).then(res => {
+            alert(res.msg); if(res.code===200) { closeModal(); if(confirm(isEn ? "Submitted! View status?" : "提交成功！是否查看状态？")) window.location.href = 'user.html'; } btn.innerText = oldText; btn.disabled = false;
+        }).catch(e => { alert('Error'); btn.innerText = oldText; btn.disabled = false; });
+    }
+
+    function openOverlay() { const o=document.getElementById('modal-overlay'); o.style.display='flex'; setTimeout(()=>o.classList.add('show'),10); }
+    function closeModal() { const o=document.getElementById('modal-overlay'); if(!o) return; o.classList.remove('show'); setTimeout(()=>{ o.style.display='none'; ['login','register','profile','swipe-hint','pay'].forEach(id=>{ const el=document.getElementById('modal-'+id); if(el) el.style.display='none'; }); },300); }
+    function switchModal(t) { 
+        ['login','register','profile','swipe-hint','pay'].forEach(id=>{const el=document.getElementById('modal-'+id);if(el)el.style.display='none';}); 
+        document.getElementById('modal-'+t).style.display='block'; 
+        if(t==='profile') loadProfileData(); 
+        
+        if(t==='register') {
+            let isEmailMode = siteConfig && siteConfig.social && siteConfig.social.reg_email_verify == '1';
+            if(isEmailMode) {
+                document.getElementById('reg-email-area').style.display = 'block';
+                document.getElementById('reg-captcha-area').style.display = 'none';
+            } else {
+                document.getElementById('reg-email-area').style.display = 'none';
+                document.getElementById('reg-captcha-area').style.display = 'block';
+            }
+        }
+    }
+
+    async function checkSession() { try { const res=await fetch('api/auth.php?action=check&t='+Date.now()); const json=await res.json(); const area=document.getElementById('user-area-float'); if(json.code===200){area.innerHTML=`<button class="nav-btn-icon" onclick="showProfileModal()" title="Profile"><img src="${json.avatar||'static/default_avatar.png'}"></button>`;}else{area.innerHTML=`<button class="nav-btn-icon" onclick="showLoginModal()"><i class="fas fa-user-circle"></i></button>`;} } catch(e){} }
+    
+    async function doLogin() { 
+        const u=document.getElementById('login-u').value, p=document.getElementById('login-p').value; 
+        if(!u||!p)return alert('Input info'); 
+        let fd=new FormData();fd.append('username',u);fd.append('password',p); 
+        try {
+            const res = await fetch('api/auth.php?action=login', {method:'POST',body:fd}); 
+            const txt = await res.text(); 
+            try {
+                const json = JSON.parse(txt);
+                if(json.code === 200){
+                    closeModal(); location.reload(); 
+                } else { alert(json.msg); }
+            } catch(e) { console.error("Login Error:", txt); alert("Login Failed (Server Error): " + txt.substring(0, 100)); }
+        } catch(e) { alert("Network Error"); }
+    }
+
+    let codeTimer = null;
+    function sendEmailCode() {
+        const email = document.getElementById('reg-email').value.trim();
+        if(!email) return alert(isEn ? 'Please enter email' : '请输入邮箱地址');
+        
+        const btn = document.getElementById('btn-send-code');
+        btn.disabled = true; btn.innerText = '发送中...';
+
+        let fd = new FormData(); fd.append('email', email);
+
+        fetch('api/send_code.php', { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(res => {
+            alert(res.msg);
+            if (res.code === 200) {
+                let countdown = 60;
+                codeTimer = setInterval(() => {
+                    countdown--; btn.innerText = countdown + 's';
+                    if (countdown <= 0) { clearInterval(codeTimer); btn.disabled = false; btn.innerText = isEn ? 'Get Code' : '获取验证码'; }
+                }, 1000);
+            } else {
+                btn.disabled = false; btn.innerText = isEn ? 'Get Code' : '获取验证码';
+            }
+        }).catch(e => { alert('网络错误 (Network Error)'); btn.disabled = false; btn.innerText = isEn ? 'Get Code' : '获取验证码'; });
+    }
+
+    async function doRegister() { 
+        const u = document.getElementById('reg-u').value.trim();
+        const p = document.getElementById('reg-p').value.trim();
+        const p2 = document.getElementById('reg-p2').value.trim();
+        let fd = new FormData();
+        fd.append('username', u); fd.append('password', p); fd.append('confirm', p2);
+
+        let isEmailMode = siteConfig && siteConfig.social && siteConfig.social.reg_email_verify == '1';
+        if (isEmailMode) {
+            const email = document.getElementById('reg-email').value.trim();
+            const eCode = document.getElementById('reg-email-code').value.trim();
+            if (!u || !p || !email || !eCode) return alert(isEn ? 'Fill all fields' : '请填写完整信息');
+            fd.append('email', email); fd.append('email_code', eCode);
+        } else {
+            const c = document.getElementById('reg-code').value.trim();
+            if (!u || !p || !c) return alert(isEn ? 'Fill all fields' : '请填写完整信息');
+            fd.append('captcha', c);
+        }
+        if (p !== p2) return alert(isEn ? 'Passwords mismatch' : '两次密码不一致');
+        
+        const btn = document.querySelector('#modal-register .login-btn');
+        let oldText = btn.innerText; btn.disabled = true; btn.innerText = '...';
+
+        try {
+            const res = await fetch('api/auth.php?action=register', {method: 'POST', body: fd});
+            const json = await res.json();
+            if (json.code === 200) {
+                alert(json.msg); closeModal(); location.reload();
+            } else {
+                alert(json.msg);
+                if(!isEmailMode) document.querySelector('.captcha-img').src = 'api/captcha.php?' + Math.random();
+            }
+        } catch(e) { alert("Network Error"); } finally { btn.disabled = false; btn.innerText = oldText; }
+    }
+
+    function loadProfileData() { fetch('api/user_action.php?action=info').then(r=>r.json()).then(j=>{ if(j.code===200){const d=j.data; document.getElementById('mini-avatar').src=d.avatar; document.getElementById('mini-name').innerText=d.nickname||d.username; document.getElementById('mini-vip').innerText=d.vip.name; document.getElementById('mini-balance').innerText=d.wallet.balance; document.getElementById('mini-points').innerText=d.wallet.points; } }); }
+    function doCheckin() { fetch('api/user_action.php?action=checkin').then(r=>r.json()).then(j=>{alert(j.msg);if(j.code===200)loadProfileData();}); }
+    function doLogout() { if(confirm(isEn?'Log out?':'确定退出吗？')) fetch('api/auth.php?action=logout').then(()=>{closeModal();checkSession();loadDetail();}); }
+    function openLightbox(src) { document.getElementById('lightbox-img').src=src; const b=document.getElementById('lightbox'); b.style.display='flex'; setTimeout(()=>b.classList.add('show'),10); }
+    function closeLightbox() { const b=document.getElementById('lightbox'); b.classList.remove('show'); setTimeout(()=>b.style.display='none',300); }
+
+    function applyI18nWrappers(htmlStr) {
+        if (!htmlStr) return '';
+        let res = htmlStr;
+        if (!res.includes('data-i18n="dl_free"')) res = res.replace(/下载静态壁纸 \(免费\)/g, '<span data-i18n="dl_free">下载静态壁纸 (免费)</span>');
+        if (!res.includes('data-i18n="dl_paid"')) res = res.replace(/下载静态壁纸 \(付费解锁\)/g, '<span data-i18n="dl_paid">下载静态壁纸 (付费解锁)</span>');
+        if (!res.includes('data-i18n="btn_copy"')) res = res.replace(/>\s*一键复制\s*</g, '><span data-i18n="btn_copy">一键复制</span><');
+        if (!res.includes('data-i18n="pwd_label"')) res = res.replace(/提取码\/密码:\s*/g, '<span data-i18n="pwd_label">提取码/密码: </span>');
+        return res;
+    }
+
+    // ========== 卡密钱包交互逻辑 ==========
+    function loadMyTokens() {
+        const container = document.getElementById('my-tokens-container');
+        if(!container) return;
+        
+        fetch('api/user_action.php?action=my_tokens')
+        .then(r=>r.json())
+        .then(res => {
+            if(res.code !== 200) {
+                container.innerHTML = `<span style="color:var(--text-sub);font-size:13px;">${isEn?'Please log in to view your tokens.':'请先登录以查看您的卡密。'}</span>`;
+                return;
+            }
+            
+            let tokens = res.data || [];
+            let validTokens = tokens.filter(t => parseFloat(t.max_amount) >= articleData.price);
+            
+            let html = '';
+            if(validTokens.length > 0) {
+                html += `<select id="selected-token-id" class="token-select">`;
+                validTokens.forEach(t => {
+                    html += `<option value="${t.id}">${t.code} (额度上限: ¥${t.max_amount})</option>`;
+                });
+                html += `</select>`;
+                html += `<button class="btn-unlock-token" onclick="doUnlockBoundToken()"><i class="fas fa-ticket-alt"></i> ${isEn?'Unlock With Token':'使用选中卡密一键解锁'}</button>`;
+            } else {
+                let txt = isEn ? "No valid tokens available. " : "暂无面值足够的可用卡密，请先充值或下方绑定。";
+                html += `<div style="font-size:13px; color:var(--text-sub); margin-bottom:10px;">${txt}</div>`;
+            }
+            
+            container.innerHTML = html;
+        }).catch(e => { container.innerHTML = `<span style="color:#ff4444;font-size:13px;">Network error</span>`; });
+    }
+
+    function bindNewToken() {
+        let code = document.getElementById('bind-code-input').value.trim();
+        if(!code) return alert(isEn ? 'Enter token code' : '请输入卡密');
+        
+        const btn = document.querySelector('.btn-code');
+        let oldHtml = btn.innerHTML;
+        btn.disabled = true; btn.innerHTML = '...';
+        
+        let fd = new FormData();
+        fd.append('code', code);
+        fetch('api/user_action.php?action=bind_token', {method:'POST', body:fd})
+        .then(r=>r.json())
+        .then(res => {
+            alert(res.msg);
+            if(res.code === 200) {
+                document.getElementById('bind-code-input').value = '';
+                loadMyTokens(); 
+            } else if (res.code === 401) {
+                showLoginModal();
+            }
+        })
+        .finally(() => { btn.disabled = false; btn.innerHTML = oldHtml; });
+    }
+
+    function doUnlockBoundToken() {
+        let tid = document.getElementById('selected-token-id').value;
+        if(!tid) return;
+        let fd = new FormData();
+        fd.append('id', id);
+        fd.append('method', 'bound_token');
+        fd.append('token_id', tid);
+        
+        fetch('api/unlock.php', {method:'POST', body:fd})
+        .then(r=>r.json())
+        .then(res => {
+            alert(res.msg);
+            if(res.code === 200) { loadDetail(); closeModal(); }
+            else if(res.code === 401) { showLoginModal(); }
+        });
+    }
+
+    function directPay(element) {
+        const oldHtml = element.innerHTML;
+        element.innerHTML = `<div style="text-align:center;width:100%;"><i class="fas fa-spinner fa-spin"></i> Processing...</div>`;
+        element.style.pointerEvents = 'none';
+
+        const fd = new FormData(); 
+        fd.append('amount', articleData.priceUsd); 
+        fd.append('article_id', id);
+        fd.append('currency', 'USD');
+
+        fetch('api/pay.php?action=create', { method:'POST', body:fd })
+            .then(r=>r.text())
+            .then(txt => {
+                try {
+                    let res = JSON.parse(txt);
+                    if(res.code === 200) { window.location.href = res.url; } 
+                    else if (res.code === 401) { showLoginModal(); element.innerHTML = oldHtml; element.style.pointerEvents = 'auto'; } 
+                    else { alert(res.msg || 'Error'); element.innerHTML = oldHtml; element.style.pointerEvents = 'auto'; }
+                } catch(e) {
+                    alert("Server Error.");
+                    element.innerHTML = oldHtml; element.style.pointerEvents = 'auto';
+                }
+            })
+            .catch(e => { alert('Network Error'); element.innerHTML = oldHtml; element.style.pointerEvents = 'auto'; });
+    }
+
+    function doUnlock(method) {
+        const fd=new FormData(); fd.append('id',id); fd.append('method',method);
+        let btn = null;
+        if(method==='code'){
+            const v=document.getElementById('author-code-input').value;
+            if(!v) return alert(isEn?'Input code':'请输入提取码');
+            fd.append('code',v);
+            btn = document.getElementById('btn-verify-author');
+            if(btn) { btn.disabled = true; btn.innerText = '...'; }
+        }
+        else if(method==='balance'){
+            if(!confirm(isEn?'Confirm pay?':'确定支付解锁吗？')) return;
+            fd.append('currency', isEn ? 'USD' : 'CNY');
+        }
+        
+        fetch('api/unlock.php',{method:'POST',body:fd})
+        .then(r=>r.text()) 
+        .then(txt => {
+            if(btn) { btn.disabled = false; btn.innerText = isEn?'Unlock':'提取'; }
+            try {
+                const res = JSON.parse(txt);
+                if(res.code===200){ alert(res.msg); loadDetail(); closeModal(); } 
+                else { if(res.code===401) showLoginModal(); else alert(res.msg); }
+            } catch(e) { alert("Server Error"); }
+        })
+        .catch(err => { if(btn) { btn.disabled = false; btn.innerText = isEn?'Unlock':'提取'; } alert("Network Error"); });
+    }
+
+    function loadDetail() {
+        fetch(`api/get_detail.php?id=${id}`).then(r=>r.json()).then(res=>{
+            if(res.code!==200) { document.getElementById('app').innerHTML=`<div style="text-align:center;padding:50px;color:#ff4444">${res.msg}</div>`; return; }
+            articleData.price = Number(res.data.price||0);
+            articleData.currency = res.data.currency;
+            articleData.userBalance = Number(res.data.user_balance||0);
+            articleData.exchangeRate = Number(res.data.exchange_rate || 7.2);
+            articleData.priceUsd = (articleData.price / articleData.exchangeRate).toFixed(2);
+            articleData.title = isEn ? (res.data.title_en || res.data.title) : res.data.title;
+            articleData.has_verify_code = res.data.has_verify_code;
+            
+            if(siteConfig) applySiteBasics(siteConfig.social);
+            render(res.data); updateDock(res.data);
+        }).catch(e=>document.getElementById('app').innerHTML='<div style="text-align:center;padding:50px;color:var(--text-sub)">Network Error</div>');
+    }
+    
+    function render(data) {
+        const c=document.getElementById('app'); currentType=data.type;
+        const dTitle=(isEn&&data.title_en)?data.title_en:data.title;
+        let dContent=(isEn&&(data.content_en||data.summary_en))?(data.content_en||data.summary_en):data.content;
+        
+        if(data.type === 'wallpaper') {
+            const labelText = isEn ? "Demonstration" : "资源演示展示";
+            const labelHtml = `<div class="demo-label"><i class="fas fa-photo-video"></i> ${labelText}</div>`;
+            dContent = labelHtml + (dContent || '');
+        } else { dContent = dContent || (isEn ? 'No description...' : '暂无简介...'); }
+
+        dContent = applyI18nWrappers(dContent);
+        data.resource_content = applyI18nWrappers(data.resource_content);
+
+        c.className=`container ${data.type==='wallpaper'?'layout-wallpaper':'layout-article'}`;
+        if(data.type==='wallpaper'){document.body.style.paddingBottom='120px';document.getElementById('pull-tip').style.display='flex';}
+        else{document.body.style.paddingBottom='40px';document.getElementById('pull-tip').style.display='none';}
+
+        const isLocked=(data.locked===true||data.locked===1||data.locked==='1'), price=Number(data.price||0);
+        let actionHtml='';
+        if(isLocked) {
+            actionHtml+=`<div class="action-card"><div style="margin-bottom:25px;font-size:18px;font-weight:800;color:var(--text-main);display:flex;align-items:center;justify-content:center;gap:10px"><span style="background:rgba(127,127,127,0.1);padding:8px;border-radius:50%"><i class="fas fa-lock" style="color:var(--primary-color)"></i></span>${isEn?'Locked Content':'隐藏资源已锁定'}</div>`;
+            
+            if(price>0.01) {
+                const showPrice = isEn ? `$${articleData.priceUsd}` : `¥${data.price}`;
+                const btnText = i18n['unlock_now'][isEn?0:1] + ` (${showPrice})`;
+                actionHtml+=`
+                <div class="pay-section" style="margin-bottom:20px;">
+                    <span class="section-title" style="display:block;font-size:12px;color:var(--text-sub);font-weight:700;margin-bottom:12px;text-align:left;">OPTION 1 : ${isEn?'Purchase':'购买解锁'}</span>
+                    <button class="btn-unlock-trigger" onclick="openPayModal()"><i class="fas fa-bolt"></i> ${btnText}</button>
+                </div>`;
+            }
+            
+            if(price>0.01) actionHtml+=`<div class="divider" style="margin:25px 0;"><span>OR</span></div>`;
+            actionHtml+=`
+            <div class="token-wallet-section">
+                <span class="section-title" style="display:block;font-size:12px;color:var(--text-sub);font-weight:700;margin-bottom:12px;text-align:left;">OPTION ${price>0.01?'2':'1'} : ${isEn?'Redeem Token':'卡密钱包'}</span>
+                <div style="font-weight:800; font-size:14px; margin-bottom:15px; color:var(--text-main); display:flex; justify-content:space-between; align-items:center;">
+                    <span><i class="fas fa-ticket-alt" style="color:var(--primary-color);"></i> ${isEn?'My Token Wallet':'我的可用卡密'}</span>
+                    <a href="user.html" style="font-size:12px; font-weight:normal; color:var(--primary-color); text-decoration:none;">${isEn?'Get Tokens':'获取卡密?'}</a>
+                </div>
+                <div id="my-tokens-container"></div>
+                <div style="margin-top:15px; display:flex; gap:10px;">
+                    <input type="text" id="bind-code-input" class="input-code" style="flex:1; height:40px; font-size:14px; border-radius:8px;" placeholder="${isEn?'Enter new token code...':'输入新卡密并绑定...'}">
+                    <button class="btn-code" style="height:40px; font-size:14px; padding:0 20px; border-radius:8px;" onclick="bindNewToken()">${isEn?'Bind':'绑定'}</button>
+                </div>
+            </div>`;
+            
+            if(articleData.has_verify_code) {
+                actionHtml+=`<div class="divider" style="margin:25px 0;"><span>SPECIAL CODE</span></div>`;
+                actionHtml+=`
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="author-code-input" class="input-code" style="height:40px; border-radius:8px;" placeholder="${isEn?'Author Free Code...':'作者专属免单提取码...'}">
+                    <button class="btn-code" id="btn-verify-author" style="height:40px; border-radius:8px;" onclick="doUnlock('code')">${isEn?'Unlock':'提取'}</button>
+                </div>`;
+            }
+            
+            actionHtml+=`</div>`;
+        } else {
+            actionHtml=`<div class="action-card" style="border-color:#00C853;text-align:left;background:rgba(255,255,255,0.9)"><h3 style="margin:0 0 15px 0;color:#00C853"><i class="fas fa-check-circle"></i> ${isEn?'Unlocked Successfully':'资源已解锁'}</h3><div class="resource-content">${data.resource_content}</div><div style="margin-top:15px;font-size:12px;color:var(--text-sub);text-align:center">* ${isEn?'Please save link properly.':'包含购买的全部资源链接，请妥善保存。'}</div></div>`;
+        }
+        
+        let originalCover=data.cover||'static/default_cover.png';
+        c.innerHTML=`<div class="cover-box" onclick="openLightbox('${originalCover}')"><img src="${originalCover}" class="cover-img"></div><div class="info-column"><h1 class="title">${dTitle}</h1><div class="meta"><span><i class="fas fa-folder-open"></i> ${data.category}</span><span><i class="far fa-clock"></i> ${data.created_at.substring(0,10)}</span><span><i class="far fa-eye"></i> ${data.views||0}</span></div><div class="desc-box">${dContent}</div>${actionHtml}</div>`;
+        
+        if(dContent.indexOf('tiktok-embed') !== -1) {
+            if(!document.getElementById('tiktok-script')) {
+                let script = document.createElement('script'); script.id = 'tiktok-script'; script.src = "https://www.tiktok.com/embed.js"; script.async = true; document.body.appendChild(script);
+            }
+        }
+        
+        if(isLocked) { loadMyTokens(); }
+
+        updateUI();
+    }
+
+    function copyToClipboard(text, btn) {
+        if(navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(showSuccess); } 
+        else {
+            let ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.left = "-9999px"; document.body.appendChild(ta); ta.select();
+            try { document.execCommand("copy"); showSuccess(); } catch(err) { alert(isEn ? "Copy failed" : "复制失败，请手动复制"); } document.body.removeChild(ta);
+        }
+        function showSuccess() {
+            let oldHtml = btn.innerHTML; btn.innerHTML = '<i class="fas fa-check"></i> <span data-i18n="copied">' + (isEn ? 'Copied' : '已复制') + '</span>'; btn.style.background = '#00C853';
+            setTimeout(() => { btn.innerHTML = oldHtml; btn.style.background = 'var(--primary-color)'; updateUI(); }, 2000);
+        }
+    }
+
+    function updateDock(data) {
+        const p=document.getElementById('btn-prev'), n=document.getElementById('btn-next');
+        if(data.prev_id){p.href=`detail.html?id=${data.prev_id}`;p.classList.remove('disabled');}else{p.removeAttribute('href');p.classList.add('disabled');}
+        if(data.next_id){nextArticleId=data.next_id;n.href=`detail.html?id=${data.next_id}`;n.classList.remove('disabled');}else{nextArticleId=null;n.removeAttribute('href');n.classList.add('disabled');}
+        if(data.type==='wallpaper' && nextArticleId) initTouch(); else removeTouch();
+    }
+    
+    let touchHandlers = {};
+    function initTouch() {
+        removeTouch();
+        let startY = 0, isPulling = false, hasVibrated = false;
+        const tip = document.getElementById('pull-tip'), txt = document.getElementById('pull-text');
+        const THRESHOLD = 250; 
+        
+        touchHandlers.start = (e) => {
+            if (currentType !== 'wallpaper' || !nextArticleId) return;
+            if (localStorage.getItem('disable_swipe_jump') === '1') return;
+            const isBottom = Math.abs((window.innerHeight + window.scrollY) - document.body.offsetHeight) <= 10;
+            if (isBottom && e.touches.length === 1) { startY = e.touches[0].clientY; isPulling = true; hasVibrated = false; tip.classList.add('visible'); }
+        };
+        touchHandlers.move = (e) => {
+            if (!isPulling) return;
+            const diff = startY - e.touches[0].clientY;
+            if (diff > 0) {
+                const translateY = diff * 0.35; tip.style.transform = `translateY(-${translateY}px)`;
+                if (diff > THRESHOLD) { tip.classList.add('release'); txt.innerText = isEn ? 'Release to jump' : '松手即可跳转'; if (!hasVibrated && navigator.vibrate) { navigator.vibrate(30); hasVibrated = true; } } 
+                else { tip.classList.remove('release'); txt.innerText = isEn ? 'Pull up hard for next' : '继续用力上滑查看下一篇'; hasVibrated = false; }
+            } else tip.style.transform = 'translateY(0)';
+        };
+        touchHandlers.end = (e) => {
+            if (!isPulling) return;
+            const diff = startY - e.changedTouches[0].clientY;
+            tip.style.transform = 'translateY(0)'; setTimeout(() => { tip.classList.remove('visible'); }, 200); isPulling = false;
+            if (diff > THRESHOLD && nextArticleId) {
+                if (localStorage.getItem('auto_swipe_jump') === '1') { window.location.href = `detail.html?id=${nextArticleId}`; } else { switchModal('swipe-hint'); openOverlay(); }
+            }
+        };
+        window.addEventListener('touchstart', touchHandlers.start, {passive: true});
+        window.addEventListener('touchmove', touchHandlers.move, {passive: true});
+        window.addEventListener('touchend', touchHandlers.end);
+    }
+    function removeTouch() { if(touchHandlers.start) { window.removeEventListener('touchstart', touchHandlers.start); window.removeEventListener('touchmove', touchHandlers.move); window.removeEventListener('touchend', touchHandlers.end); } }
+    
+    function confirmSwipe() { 
+        if (document.getElementById('chk-disable-jump').checked) {
+            localStorage.setItem('disable_swipe_jump', '1'); closeModal(); alert(isEn ? "Swipe jump disabled. You can still use the bottom buttons." : "上滑跳转已永久关闭，你可以继续使用底部按钮翻页。"); return;
+        }
+        if (document.getElementById('chk-auto-jump').checked) { localStorage.setItem('auto_swipe_jump', '1'); } window.location.href = `detail.html?id=${nextArticleId}`; 
+    }
+    
+    let pageStartTime = Date.now();
+    let trackInterval = null;
+
+    window.addEventListener('load', function() {
+        const fd = new FormData(); fd.append('url', window.location.href);
+        fetch('api/track.php', { method: 'POST', body: fd }).catch(e => {});
+        trackInterval = setInterval(() => {
+            let currentDuration = Math.floor((Date.now() - pageStartTime) / 1000);
+            const updateFd = new FormData(); updateFd.append('action', 'update_duration'); updateFd.append('url', window.location.href); updateFd.append('duration', currentDuration);
+            fetch('api/track.php', { method: 'POST', body: updateFd, keepalive: true }).catch(() => {});
+        }, 5000);
+    });
+    
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            let finalDuration = Math.floor((Date.now() - pageStartTime) / 1000);
+            const finalFd = new FormData(); finalFd.append('action', 'update_duration'); finalFd.append('url', window.location.href); finalFd.append('duration', finalDuration);
+            navigator.sendBeacon('api/track.php', finalFd);
+        }
+    });
+</script>
+</body>
+</html>

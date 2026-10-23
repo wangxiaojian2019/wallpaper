@@ -1,0 +1,81 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "WallArt 4K 壁纸",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/detail/index",
+			"style": {
+				"navigationBarTitleText": "壁纸预览",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/download/index",
+			"style": {
+				"navigationBarTitleText": "网盘下载",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/membership/index",
+			"style": {
+				"navigationBarTitleText": "VIP 尊享特权",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/lookup/index",
+			"style": {
+				"navigationBarTitleText": "订单提取",
+				"navigationBarBackgroundColor": "#0e0d13",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/payment/success",
+			"style": {
+				"navigationBarTitleText": "支付结果",
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#888888",
+		"selectedColor": "#ffffff",
+		"backgroundColor": "#121218",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "画廊"
+			},
+			{
+				"pagePath": "pages/membership/index",
+				"text": "VIP特权"
+			},
+			{
+				"pagePath": "pages/my/index",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "WallArt 4K",
+		"navigationBarBackgroundColor": "#0f0f13",
+		"backgroundColor": "#0f0f13"
+	}
+}

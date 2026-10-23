@@ -1,0 +1,489 @@
+
+=========================================
+CAML: descriptors/09E9B685-7456-4856-9C10-47DF26B76C33/versions/1/contents/7400.WWDC_2022-390w-844h@3x~iphone.wallpaper/7400.WWDC_2022_Background-390w-844h@3x~iphone.ca/main.caml
+=========================================
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                                                               ║
+  ║                         CAPlayground                          ║
+  ║                                                               ║
+  ║      Create beautiful Core Animation wallpapers for iOS       ║
+  ║                                                               ║
+  ║          Website: https://caplayground.vercel.app             ║
+  ║                                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                                                               ║
+  ║                         CAPlayground                          ║
+  ║                                                               ║
+  ║      Create beautiful Core Animation wallpapers for iOS       ║
+  ║                                                               ║
+  ║          Website: https://caplayground.vercel.app             ║
+  ║                                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+<caml xmlns="http://www.apple.com/CoreAnimation/1.0">
+  <CALayer id="__capRootLayer__" name="CAPlayground Root Layer" bounds="0 0 390 844" position="195 422" zPosition="0" geometryFlipped="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" backgroundColor="0.898 0.9059 0.9216" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+    <sublayers>
+      <CALayer id="1791373198012" name="Root Layer" bounds="0 0 390 844" position="195 422" zPosition="0" geometryFlipped="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" backgroundColor="0.898 0.9059 0.9216" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+        <sublayers>
+          <CALayer id="mxs13y4lbuemuy1s2rg" name="vbw.jpg 1" bounds="0 0 524 895" position="198.25427520000002 411.2745822" zPosition="0" opacity="0" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/vbw.jpg"/>
+            </contents>
+          </CALayer>
+          <CALayer id="sgmaa7fq5xhmuy1cukt" name="1.png 1" bounds="0 0 390 488.3478260869565" position="198.2679899 422.0695758" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="0.52" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0) scale(1.76, 1.76, 1)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <backgroundColor value="0.9608 0.9608 0.9608" opacity="0"/>
+            <contents>
+              <CGImage src="assets/1.png"/>
+            </contents>
+            <sublayers>
+              <CALayer id="7h1qkwzzwbfmuy1cump" name="2.png 1" bounds="0 0 390 488.3478260869565" position="278.3236497 244.16171334347825" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+                <backgroundColor value="0.9608 0.9608 0.9608" opacity="0"/>
+                <contents>
+                  <CGImage src="assets/2.png"/>
+                </contents>
+                <sublayers>
+                  <CALayer id="4w652wp8b1rmuy1cunt" name="3.png 1" bounds="0 0 390 488.3478260869565" position="195.0028732 248.14711734347824" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+                    <backgroundColor value="0.9608 0.9608 0.9608" opacity="0"/>
+                    <contents>
+                      <CGImage src="assets/3.png"/>
+                    </contents>
+                  </CALayer>
+                </sublayers>
+              </CALayer>
+            </sublayers>
+          </CALayer>
+        </sublayers>
+      </CALayer>
+    </sublayers>
+    <modules/>
+    <states>
+      <LKState name="Locked">
+        <elements>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="opacity">
+            <value type="real" value="0.74"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="position.x">
+            <value type="integer" value="198"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="position.y">
+            <value type="integer" value="422"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="7h1qkwzzwbfmuy1cump" keyPath="position.x">
+            <value type="integer" value="278"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="7h1qkwzzwbfmuy1cump" keyPath="position.y">
+            <value type="integer" value="244"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="4w652wp8b1rmuy1cunt" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="4w652wp8b1rmuy1cunt" keyPath="position.y">
+            <value type="integer" value="248"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="mxs13y4lbuemuy1s2rg" keyPath="opacity">
+            <value type="integer" value="0"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+      <LKState name="Unlock">
+        <elements>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="position.x">
+            <value type="integer" value="-392"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="position.y">
+            <value type="integer" value="411"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="7h1qkwzzwbfmuy1cump" keyPath="position.x">
+            <value type="integer" value="837"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="7h1qkwzzwbfmuy1cump" keyPath="position.y">
+            <value type="integer" value="209"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="4w652wp8b1rmuy1cunt" keyPath="position.x">
+            <value type="integer" value="-423"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="4w652wp8b1rmuy1cunt" keyPath="position.y">
+            <value type="integer" value="212"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="mxs13y4lbuemuy1s2rg" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+      <LKState name="Sleep">
+        <elements>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="opacity">
+            <value type="real" value="0.52"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="position.x">
+            <value type="integer" value="198"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="sgmaa7fq5xhmuy1cukt" keyPath="position.y">
+            <value type="integer" value="422"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="7h1qkwzzwbfmuy1cump" keyPath="position.x">
+            <value type="integer" value="278"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="7h1qkwzzwbfmuy1cump" keyPath="position.y">
+            <value type="integer" value="244"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="4w652wp8b1rmuy1cunt" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="4w652wp8b1rmuy1cunt" keyPath="position.y">
+            <value type="integer" value="248"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="mxs13y4lbuemuy1s2rg" keyPath="opacity">
+            <value type="integer" value="0"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+    </states>
+    <stateTransitions>
+      <LKStateTransition fromState="*" toState="Locked">
+        <elements>
+          <LKStateTransitionElement targetId="sgmaa7fq5xhmuy1cukt" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="mxs13y4lbuemuy1s2rg" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="Locked" toState="*">
+        <elements>
+          <LKStateTransitionElement targetId="sgmaa7fq5xhmuy1cukt" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="mxs13y4lbuemuy1s2rg" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Unlock">
+        <elements>
+          <LKStateTransitionElement targetId="sgmaa7fq5xhmuy1cukt" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="mxs13y4lbuemuy1s2rg" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="Unlock" toState="*">
+        <elements>
+          <LKStateTransitionElement targetId="sgmaa7fq5xhmuy1cukt" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="mxs13y4lbuemuy1s2rg" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Sleep">
+        <elements>
+          <LKStateTransitionElement targetId="sgmaa7fq5xhmuy1cukt" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="mxs13y4lbuemuy1s2rg" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="Sleep" toState="*">
+        <elements>
+          <LKStateTransitionElement targetId="sgmaa7fq5xhmuy1cukt" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="mxs13y4lbuemuy1s2rg" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+    </stateTransitions>
+  </CALayer>
+</caml>
+=========================================
+CAML: descriptors/09E9B685-7456-4856-9C10-47DF26B76C33/versions/1/contents/7400.WWDC_2022-390w-844h@3x~iphone.wallpaper/7400.WWDC_2022_Floating-390w-844h@3x~iphone.ca/main.caml
+=========================================
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                                                               ║
+  ║                         CAPlayground                          ║
+  ║                                                               ║
+  ║      Create beautiful Core Animation wallpapers for iOS       ║
+  ║                                                               ║
+  ║          Website: https://caplayground.vercel.app             ║
+  ║                                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                                                               ║
+  ║                         CAPlayground                          ║
+  ║                                                               ║
+  ║      Create beautiful Core Animation wallpapers for iOS       ║
+  ║                                                               ║
+  ║          Website: https://caplayground.vercel.app             ║
+  ║                                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+<caml xmlns="http://www.apple.com/CoreAnimation/1.0">
+  <CALayer id="__capRootLayer__" name="CAPlayground Root Layer" bounds="0 0 390 844" position="195 422" zPosition="0" geometryFlipped="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+    <sublayers>
+      <CALayer id="1791373198012" name="Root Layer" bounds="0 0 390 844" position="195 422" zPosition="0" geometryFlipped="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+        <sublayers>
+          <CALayer id="vld6dwdmmcmuy1ebev" name="buu1.png 1" bounds="0 0 461 577" position="206.1030413 367.4014681" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/buu1.png"/>
+            </contents>
+          </CALayer>
+          <CALayer id="17xao4sz9f7muy1efpf" name="chansa2.png 1" bounds="0 0 461 577" position="206.1248477 367.36143549999997" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/chansa2.png"/>
+            </contents>
+          </CALayer>
+          <CALayer id="q9ognjgyermmuy1n05b" name="chao3wukong.png 1" bounds="0 0 390 449.6833773087071" position="195 422" zPosition="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/chao3wukong.png"/>
+            </contents>
+          </CALayer>
+          <CALayer id="1umr4xkv5ehmuy1mv72" name="buouu.png 1" bounds="0 0 390 449.6833773087071" position="195 422" zPosition="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/buouu.png"/>
+            </contents>
+          </CALayer>
+        </sublayers>
+      </CALayer>
+    </sublayers>
+    <modules/>
+    <states>
+      <LKState name="Locked">
+        <elements>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="position.x">
+            <value type="integer" value="206"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="position.y">
+            <value type="integer" value="367"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="bounds.size.width">
+            <value type="integer" value="461"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="bounds.size.height">
+            <value type="integer" value="577"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="position.x">
+            <value type="integer" value="206"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="position.y">
+            <value type="integer" value="367"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="bounds.size.width">
+            <value type="integer" value="461"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="bounds.size.height">
+            <value type="integer" value="577"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="position.x">
+            <value type="integer" value="719"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="position.y">
+            <value type="integer" value="893"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="bounds.size.width">
+            <value type="integer" value="257"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="bounds.size.height">
+            <value type="integer" value="296"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="position.x">
+            <value type="integer" value="783"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="position.y">
+            <value type="integer" value="959"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="bounds.size.width">
+            <value type="integer" value="232"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="bounds.size.height">
+            <value type="integer" value="268"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+      <LKState name="Unlock">
+        <elements>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="position.x">
+            <value type="integer" value="-170"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="position.y">
+            <value type="integer" value="682"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="bounds.size.width">
+            <value type="integer" value="331"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="bounds.size.height">
+            <value type="integer" value="414"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="position.x">
+            <value type="integer" value="-170"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="position.y">
+            <value type="integer" value="995"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="bounds.size.width">
+            <value type="integer" value="308"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="bounds.size.height">
+            <value type="integer" value="386"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="position.y">
+            <value type="integer" value="422"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="bounds.size.width">
+            <value type="integer" value="390"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="bounds.size.height">
+            <value type="real" value="449.6833773087071"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="position.y">
+            <value type="integer" value="422"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="bounds.size.width">
+            <value type="integer" value="390"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="bounds.size.height">
+            <value type="real" value="449.6833773087071"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+      <LKState name="Sleep">
+        <elements>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="position.x">
+            <value type="integer" value="206"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="position.y">
+            <value type="integer" value="367"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="bounds.size.width">
+            <value type="integer" value="461"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="17xao4sz9f7muy1efpf" keyPath="bounds.size.height">
+            <value type="integer" value="577"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="position.x">
+            <value type="integer" value="206"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="position.y">
+            <value type="integer" value="367"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="bounds.size.width">
+            <value type="integer" value="461"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vld6dwdmmcmuy1ebev" keyPath="bounds.size.height">
+            <value type="integer" value="577"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="position.y">
+            <value type="integer" value="422"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="bounds.size.width">
+            <value type="integer" value="390"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="q9ognjgyermmuy1n05b" keyPath="bounds.size.height">
+            <value type="real" value="449.6833773087071"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="position.y">
+            <value type="integer" value="422"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="bounds.size.width">
+            <value type="integer" value="390"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="1umr4xkv5ehmuy1mv72" keyPath="bounds.size.height">
+            <value type="real" value="449.6833773087071"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+    </states>
+    <stateTransitions>
+      <LKStateTransition fromState="*" toState="Locked">
+        <elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="Locked" toState="*">
+        <elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Unlock">
+        <elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="Unlock" toState="*">
+        <elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Sleep">
+        <elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="Sleep" toState="*">
+        <elements/>
+      </LKStateTransition>
+    </stateTransitions>
+  </CALayer>
+</caml>
+=========================================
+CAML: descriptors/09E9B685-7456-4856-9C10-47DF26B76C33/versions/1/contents/7400.WWDC_2022-390w-844h@3x~iphone.wallpaper/7400.WWDC_2022_Foreground-390w-844h@3x~iphone.ca/main.caml
+=========================================
+<?xml version="1.0" encoding="UTF-8"?>
+
+<caml xmlns="http://www.apple.com/CoreAnimation/1.0">
+  <CALayer allowsEdgeAntialiasing="1" allowsGroupOpacity="1" bounds="0 0 390 844" contentsFormat="RGBA8" geometryFlipped="1" hidden="0" name="Root Layer" position="195 422">
+    <scriptComponents/>
+    <states>
+      <LKState name="Locked">
+	<elements/>
+      </LKState>
+      <LKState name="Unlock">
+	<elements/>
+      </LKState>
+      <LKState name="Sleep">
+	<elements/>
+      </LKState>
+    </states>
+    <stateTransitions>
+      <LKStateTransition fromState="*" toState="Unlock">
+	<elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="Unlock" toState="*">
+	<elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Locked">
+	<elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="Locked" toState="*">
+	<elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Sleep">
+	<elements/>
+      </LKStateTransition>
+      <LKStateTransition fromState="Sleep" toState="*">
+	<elements/>
+      </LKStateTransition>
+    </stateTransitions>
+  </CALayer>
+</caml>

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Wallpaper</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --bg-color: #fdfbf7; --text-main: #333; --text-sub: #666; --primary-color: #007AFF; 
+            --card-bg: #fff; --navbar-bg: rgba(255, 255, 255, 0.65); --border-color: rgba(255, 255, 255, 0.5);
+            --shadow: 0 8px 20px rgba(0,0,0,0.06); --input-bg: rgba(255,255,255,0.25);
+            --card-radius: 20px; --modal-bg: rgba(255,255,255,0.95);
+        }
+        [data-theme="dark"] {
+            --bg-color: #0a0a0a; --text-main: #f0f0f0; --text-sub: #aaa; --primary-color: #0A84FF;
+            --card-bg: #1c1c1e; --navbar-bg: rgba(28, 28, 30, 0.65); --border-color: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 20px rgba(0,0,0,0.3); --input-bg: rgba(0,0,0,0.3); --modal-bg: rgba(28, 28, 30, 0.95);
+        }
+        html { height: 100%; overflow: hidden; }
+        body { 
+            margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Inter', sans-serif; 
+            color: var(--text-main); background-color: var(--bg-color); overflow-y: auto; overscroll-behavior: none; 
+            -webkit-overflow-scrolling: touch; padding-top: 80px; box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background-image: radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.05) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 0, 85, 0.05) 0px, transparent 50%); pointer-events: none;
+        }
+        [data-theme="dark"] body::before { background-image: radial-gradient(at 0% 0%, rgba(10, 132, 255, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 69, 58, 0.1) 0px, transparent 50%); }
+
+        #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .fog-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.85), transparent 60%), linear-gradient(180deg, rgba(240,242,245,0.5) 0%, rgba(220,230,240,0.5) 100%); backdrop-filter: blur(30px); transition: background 0.3s; }
+        [data-theme="dark"] .fog-overlay { background: radial-gradient(circle at 50% 30%, rgba(30,30,30,0.85), transparent 60%), linear-gradient(180deg, rgba(10,10,12,0.5) 0%, rgba(0,0,0,0.8) 100%); }
+        
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; box-sizing: border-box; background: var(--navbar-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 15px 30px; height: 70px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); transition: background 0.3s, border-color 0.3s; }
+        .water-layer { position: absolute; top: 0; left: 0; width: 200%; height: 100%; z-index: -1; background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(220, 245, 255, 0.25) 30%, rgba(255, 255, 255, 0) 50%, rgba(220, 245, 255, 0.25) 80%); animation: water-sway 12s linear infinite; pointer-events: none; }
+        [data-theme="dark"] .water-layer { opacity: 0.1; }
+        @keyframes water-sway { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        .logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #007AFF, #00C6FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; flex-shrink: 0; z-index: 2; text-shadow: 0 2px 10px rgba(0,122,255,0.1); text-decoration: none; }
+        .nav-controls { display: flex; gap: 10px; align-items: center; flex-shrink: 0; z-index: 2; }
+        .nav-btn { cursor: pointer; padding: 8px 14px; border-radius: 18px; background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 2px 6px rgba(0,0,0,0.05); font-size: 13px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        [data-theme="dark"] .nav-btn { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.1); color: #fff; }
+        .nav-btn:hover { background: var(--card-bg); transform: translateY(-2px); color: var(--primary-color); }
+        .nav-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--card-bg); cursor: pointer; transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: block; }
+        .nav-avatar:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-color: var(--primary-color); }
+        
+        .hero-section { padding: 20px 20px 10px; text-align: center; }
+        .search-wrapper { max-width: 500px; margin: 0 auto; position: relative; }
+        .search-input { width: 100%; padding: 12px 20px 12px 50px; border-radius: 25px; border: 1px solid var(--border-color); background: var(--input-bg); backdrop-filter: blur(25px); font-size: 15px; outline: none; transition: 0.3s; box-sizing: border-box; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); color: var(--text-main); }
+        .search-input:focus { background: var(--card-bg); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15); border-color: var(--primary-color); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
+
+        .category-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px 20px 30px; }
+        .cat-btn { padding: 8px 20px; border-radius: 20px; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 15px; font-weight: 600; color: var(--text-sub); cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
+        .cat-btn.active, .cat-btn:hover { background: var(--card-bg); color: var(--text-main); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: var(--primary-color); }
+        
+        .wish-btn:hover { background: #FFD700; border-color: #FFD700; color: #fff !important; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
+        .wish-btn i { color: #FFD700; transition: 0.2s; }
+        .wish-btn:hover i { color: #fff; }
+        .contact-btn:hover { background: #333; border-color: #333; color: #fff !important; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        [data-theme="dark"] .contact-btn:hover { background: #fff; border-color: #fff; color: #000 !important; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 25px; padding: 0 40px 20px; max-width: 1400px; margin: 0 auto; }
+        .card-item { position: relative; width: 100%; aspect-ratio: 9 / 19.5; border-radius: var(--card-radius); overflow: hidden; background: var(--card-bg); box-shadow: var(--shadow); transition: transform 0.3s ease; cursor: pointer; }
+        .card-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; will-change: transform; }
+        .card-item:hover .card-img { transform: scale(1.05); }
+        .card-price { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #ffd700; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 10px; backdrop-filter: blur(5px); pointer-events: none; }
+        .glass-deck { position: absolute; bottom: 8px; left: 8px; right: 8px; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 16px; padding: 10px; color: #333; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); pointer-events: none; }
+        
+        [data-theme="dark"] .glass-deck { background: rgba(0, 0, 0, 0.65); border-color: rgba(255, 255, 255, 0.1); color: #fff; }
+        [data-theme="dark"] .card-meta { color: #ccc; }
+        .card-title { font-size: 13px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-shadow: 0 1px 1px rgba(255,255,255,0.5); }
+        [data-theme="dark"] .card-title { text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .card-meta { display: flex; justify-content: space-between; font-size: 11px; color: #333; font-weight: 600; align-items: center; }
+
+        .load-more-wrapper { display: flex; justify-content: center; padding: 20px 0 60px; width: 100%; }
+        .btn-load-more { padding: 15px 50px; background: linear-gradient(135deg, var(--primary-color), #00C6FF); color: #fff; font-size: 16px; font-weight: 800; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 1px; }
+        .btn-load-more:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 30px rgba(0, 122, 255, 0.4); }
+        .btn-load-more.disabled { background: var(--input-bg); color: var(--text-sub); box-shadow: none; cursor: not-allowed; transform: none; border: 1px solid var(--border-color); backdrop-filter: blur(10px); }
+
+        #single-page-container { max-width: 1200px; margin: 0 auto; padding: 20px 40px 60px; line-height: 1.8; color: var(--text-main); font-size: 16px; }
+        #single-page-container img { max-width: 100%; border-radius: 12px; height: auto; }
+        #single-page-container h1, #single-page-container h2 { color: var(--primary-color); }
+        
+        .social-grid { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px; justify-content: center; }
+        .social-btn { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 16px; font-size: 24px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); transition: 0.2s; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .social-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .s-tiktok:hover { color: #000; border-color: #000; }
+        [data-theme="dark"] .s-tiktok:hover { color: #fff; border-color: #fff; }
+        .s-youtube:hover { color: #f00; border-color: #f00; }
+        .s-ins:hover { color: #C13584; border-color: #C13584; }
+        .s-facebook:hover { color: #1877F2; border-color: #1877F2; }
+        .s-xhs:hover { color: #ff2442; border-color: #ff2442; }
+        .s-douyin:hover { color: #000; border-color: #000; }
+        .s-bili:hover { color: #00aeec; border-color: #00aeec; }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .glass-box { background: var(--modal-bg); padding: 30px; border-radius: 24px; width: 320px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.2); transform: scale(0.95); transition: transform 0.3s; position: relative; border: 1px solid var(--border-color); color: var(--text-main); }
+        .modal-overlay.show .glass-box { transform: scale(1); }
+        .close-btn { position: absolute; top: 15px; right: 15px; cursor: pointer; color: var(--text-sub); font-size: 18px; }
+        
+        .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 12px; background: rgba(127,127,127,0.05); color: var(--text-main); outline: none; box-sizing: border-box; font-size: 16px; }
+        .login-btn { width: 100%; padding: 12px; background: var(--text-main); color: var(--bg-color); border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 5px; font-size: 16px; }
+        .switch-link { margin-top: 15px; font-size: 13px; color: var(--text-sub); cursor: pointer; text-decoration: underline; display: block; }
+        .captcha-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .captcha-img { height: 42px; border-radius: 8px; cursor: pointer; border: 1px solid var(--border-color); }
+        
+        .mini-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--card-bg); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .mini-name { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
+        .mini-vip { font-size: 12px; background: #000; color: gold; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 15px; }
+        .mini-stats { display: flex; justify-content: space-around; margin-bottom: 25px; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 15px 0; }
+        .mini-stat-val { font-weight: 800; color: var(--primary-color); font-size: 16px; }
+        .mini-stat-lbl { font-size: 12px; color: var(--text-sub); }
+        .action-btn { padding: 10px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; font-size: 13px; }
+        .btn-checkin { background: rgba(0, 122, 255, 0.1); color: var(--primary-color); }
+        .btn-more { background: var(--text-main); color: var(--bg-color); }
+        .logout-link { display: block; margin-top: 15px; color: #ff4444; font-size: 12px; text-decoration: none; cursor: pointer; }
+
+        .cs-fab { position: fixed; right: 25px; bottom: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+        .cs-menu { display: flex; flex-direction: column; gap: 12px; opacity: 0; pointer-events: none; transform: translateY(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .cs-menu.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .cs-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: var(--shadow); display: flex; justify-content: center; align-items: center; font-size: 20px; text-decoration: none; transition: 0.3s; cursor: pointer; position: relative; color: var(--text-main); }
+        .cs-btn:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .cs-toggle { width: 52px; height: 52px; background: linear-gradient(135deg, #007AFF, #00C6FF); color: #fff; border: none; font-size: 24px; box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3); z-index: 2; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
+        .cs-toggle:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 10px 25px rgba(0, 122, 255, 0.4); }
+        .cs-tooltip { position: absolute; right: 55px; background: var(--text-main); color: var(--bg-color); padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: bold; white-space: nowrap; pointer-events: none; opacity: 0; transition: 0.3s; transform: translateX(10px); box-shadow: var(--shadow); }
+        .cs-btn:hover .cs-tooltip { opacity: 1; transform: translateX(0); }
+
+        @media (max-width: 768px) {
+            .navbar { display: flex; flex-direction: column; align-items: stretch; padding: 15px; gap: 15px; height: auto; }
+            body { padding-top: 110px; }
+            .mobile-top-row { display: flex; width: 100%; justify-content: space-between; align-items: center; }
+            .hero-section { padding: 5px 20px; }
+            .grid-container { padding: 0 10px 20px !important; gap: 10px !important; grid-template-columns: repeat(2, 1fr) !important; }
+            .cs-fab { bottom: 20px; right: 15px; }
+            #single-page-container { padding: 10px 20px 40px; }
+        }
+        .mobile-top-row { display: contents; } 
+    </style>
+</head>
+<body>
+
+    <div class="fog-overlay"></div>
+    <canvas id="rain-canvas"></canvas>
+
+    <nav class="navbar">
+        <div class="water-layer"></div>
+        <div class="mobile-top-row">
+            <a href="index.html" class="logo">Myself 3D</a>
+            <div class="nav-controls">
+                <button class="nav-btn" onclick="toggleTheme()" title="Switch Theme"><i class="fas fa-moon" id="theme-icon"></i></button>
+                <button class="nav-btn" onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="lang-text">CN</span></button>
+                <div id="user-area">
+                    <button class="nav-btn" onclick="openModal('login')"><i class="fas fa-user-circle"></i> <span data-i18n="btn_login">Login</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="search-input" data-i18n-placeholder="ph_search" placeholder="Search..." onkeypress="handleSearch(event)">
+        </div>
+    </div>
+
+    <div class="category-bar" id="category-container">
+        <button class="cat-btn active" onclick="filterCat('ALL', this)" data-i18n="cat_all">All</button>
+    </div>
+
+    <div class="grid-container" id="content-grid"></div>
+    <div class="load-more-wrapper" id="load-more-wrapper">
+        <button class="btn-load-more" id="load-more-btn" onclick="loadNextPage()">
+            <i class="fas fa-circle-notch fa-spin" style="margin-right:8px; display:none;" id="load-spinner"></i>
+            <span id="load-text">Loading...</span>
+        </button>
+    </div>
+
+    <div id="single-page-container" style="display:none;"></div>
+
+    <div class="cs-fab" id="cs-fab" style="display:none;">
+        <div class="cs-menu" id="cs-menu"></div>
+        <button class="cs-toggle" onclick="toggleCsMenu()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this) closeModal()">
+        
+        <div class="glass-box" id="modal-notice" style="display:none; text-align:left;">
+            <i class="fas fa-times close-btn" onclick="closeNotice()"></i>
+            <h3 style="margin-top:0;margin-bottom:15px;text-align:center" id="notice-title" data-i18n="notice_title">系统公告</h3>
+            <div id="notice-content" style="font-size:14px;line-height:1.6;white-space:pre-wrap;margin-bottom:25px;max-height:60vh;overflow-y:auto;color:var(--text-main)"></div>
+            <button class="login-btn" onclick="closeNotice()" data-i18n="btn_gotit">我已知晓</button>
+        </div>
+
+        <div class="glass-box" id="modal-login" style="display:none">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <h3 style="margin-top:0;margin-bottom:20px" data-i18n="welcome_back">Welcome Back</h3>
+            <input type="text" id="login-u" class="login-input" data-i18n-placeholder="ph_username" placeholder="Username / ID">
+            <input type="password" id="login-p" class="login-input" data-i18n-placeholder="ph_password" placeholder="Password">
+            <button class="login-btn" onclick="doLogin()" data-i18n="btn_signin">Sign In</button>
+            <span class="switch-link" onclick="switchModal('register')" data-i18n="link_no_account">No account? Create one</span>
+        </div>
+
+        <div class="glass-box" id="modal-register" style="display:none">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <h3 style="margin-top:0;margin-bottom:20px" data-i18n="create_account">Create Account</h3>
+            <input type="text" id="reg-u" class="login-input" data-i18n-placeholder="ph_username" placeholder="Username">
+            <input type="password" id="reg-p" class="login-input" data-i18n-placeholder="ph_password" placeholder="Password">
+            <input type="password" id="reg-p2" class="login-input" data-i18n-placeholder="ph_confirm" placeholder="Confirm Password">
+            
+            <div id="reg-email-area" style="display:none;">
+                <input type="email" id="reg-email" class="login-input" data-i18n-placeholder="ph_email" placeholder="邮箱地址 (Email)">
+                <div class="captcha-row">
+                    <input type="text" id="reg-email-code" class="login-input" data-i18n-placeholder="ph_email_code" placeholder="邮箱验证码" style="margin-bottom:0">
+                    <button id="btn-send-code" onclick="sendEmailCode()" style="width:130px; border-radius:12px; background:var(--primary-color); color:#fff; border:none; cursor:pointer; font-weight:bold; font-size:13px; transition:0.2s;" data-i18n="btn_get_code">获取验证码</button>
+                </div>
+            </div>
+            
+            <div id="reg-captcha-area" style="display:none;">
+                <div class="captcha-row">
+                    <input type="text" id="reg-code" class="login-input" data-i18n-placeholder="ph_code" placeholder="Code" style="margin-bottom:0">
+                    <img src="api/captcha.php" class="captcha-img" onclick="this.src='api/captcha.php?'+Math.random()" title="Tap to refresh">
+                </div>
+            </div>
+
+            <button class="login-btn" onclick="doRegister()" data-i18n="btn_signup">Sign Up</button>
+            <span class="switch-link" onclick="switchModal('login')" data-i18n="link_has_account">Already have an account? Sign In</span>
+        </div>
+
+        <div class="glass-box" id="modal-profile" style="display:none">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <img src="static/default_avatar.png" id="mini-avatar" class="mini-avatar">
+            <div class="mini-name" id="mini-name">Loading...</div>
+            <div class="mini-vip" id="mini-vip">VIP</div>
+            <div class="mini-stats">
+                <div><div class="mini-stat-val" id="mini-balance">0.00</div><div class="mini-stat-lbl" data-i18n="balance">Balance</div></div>
+                <div><div class="mini-stat-val" id="mini-points">0</div><div class="mini-stat-lbl" data-i18n="points">Points</div></div>
+            </div>
+            <div class="mini-actions">
+                <button class="action-btn btn-checkin" onclick="doCheckin()" data-i18n="btn_checkin">Check-in</button>
+                <button class="action-btn btn-more" onclick="window.location.href='user.html'" data-i18n="btn_more">More</button>
+            </div>
+            <a class="logout-link" onclick="doLogout()" data-i18n="btn_logout">Log out</a>
+        </div>
+
+        <div class="glass-box" id="modal-contact" style="display:none">
+            <i class="fas fa-times close-btn" onclick="closeModal()"></i>
+            <h3 style="margin-top:0;margin-bottom:15px" data-i18n="contact_title">Social Media</h3>
+            <p style="font-size:13px;color:var(--text-sub);margin-bottom:20px" data-i18n="contact_desc">Follow us for updates.</p>
+            <div class="social-grid" id="social-grid">
+                <div style="color:var(--text-sub)"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage=1, currentCat='ALL', currentQuery='', isEn=false;
+        let currentList = []; 
+        let categoryMap = {}; 
+        let siteConfig = null; 
+
+        const i18n = {
+            "btn_login": ["Login", "登录"], "welcome_back": ["Welcome Back", "欢迎回来"], "create_account": ["Create Account", "创建账号"],
+            "btn_signin": ["Sign In", "登 录"], "btn_signup": ["Sign Up", "注 册"], "link_no_account": ["No account? Create one", "没有账号？去注册"],
+            "link_has_account": ["Already have an account? Sign In", "已有账号？去登录"], "ph_search": ["Search...", "搜索..."],
+            "ph_username": ["Username / ID", "用户名 / ID"], "ph_password": ["Password", "密码"], "ph_confirm": ["Confirm Password", "确认密码"],
+            "ph_code": ["Code", "验证码"], "ph_email": ["Email", "邮箱地址"], "ph_email_code": ["Email Code", "邮箱验证码"], "btn_get_code": ["Get Code", "获取验证码"],
+            "cat_all": ["All", "全部"], "cat_wish": ["Wish", "许愿"], "cat_social": ["Social", "社交媒体"],
+            "balance": ["Balance", "余额"], "points": ["Points", "积分"], "btn_checkin": ["Check-in", "签到"], "btn_more": ["More", "详情"],
+            "btn_logout": ["Log out", "退出登录"], 
+            "btn_load_more": ["Load More Wallpapers", "加载更多壁纸"],
+            "btn_loading": ["Loading...", "全力加载中..."],
+            "btn_no_more": ["No more data", "已经是全部内容了"],
+            "contact_title": ["Social Media", "社交媒体"], "contact_desc": ["Follow us for updates.", "关注我们获取最新动态。"],
+            "notice_title": ["System Notice", "系统公告"],
+            "btn_gotit": ["Got it", "我已知晓"]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => { 
+            initTheme(); initLang(); checkSession(); loadData(); initRain(); 
+            loadGlobalSettings(); 
+        });
+
+        function applySiteBasics(cfg) {
+            if (!cfg) return;
+            if (cfg.site_name) {
+                document.title = cfg.site_name;
+                const logoEl = document.querySelector('.logo');
+                if (logoEl) logoEl.innerText = cfg.site_name;
+            }
+            if (cfg.site_favicon) {
+                let link = document.querySelector("link[rel~='icon']");
+                if (!link) {
+                    link = document.createElement('link');
+                    link.rel = 'icon';
+                    document.head.appendChild(link);
+                }
+                link.href = cfg.site_favicon;
+            }
+        }
+
+        function toggleCsMenu() { document.getElementById('cs-menu').classList.toggle('active'); }
+
+        function renderCustomerService() {
+            if(!siteConfig || !siteConfig.social) return;
+            const s = siteConfig.social;
+            let html = '';
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            const processLink = (val, type) => {
+                if (!val) return '';
+                val = val.trim();
+                if (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('tencent://') || val.startsWith('mqqwpa://')) return val;
+                switch(type) {
+                    case 'qq': return isMobile ? `mqqwpa://im/chat?chat_type=wpa&uin=${val}&version=1&src_type=web` : `tencent://message/?uin=${val}&Site=Web&Menu=yes`;
+                    case 'tg': val = val.replace(/^@/, ''); return `https://t.me/${val}`;
+                    case 'mail': return `mailto:${val}`;
+                    case 'discord': return `https://${val}`;
+                    default: return 'https://' + val;
+                }
+            };
+
+            const addBtn = (key, icon, color, tooltip, type='url', extraClass='') => {
+                if(s[key]) {
+                    let link = type === 'wechat' ? 'javascript:void(0)' : processLink(s[key], type);
+                    let onClick = type === 'wechat' ? `onclick="copyWechatId('${s[key]}')"` : `target="_blank"`;
+                    html += `<a href="${link}" ${onClick} class="cs-btn ${extraClass}" style="color:${color}"><i class="${icon}"></i><span class="cs-tooltip">${tooltip}</span></a>`;
+                }
+            };
+
+            addBtn('social_qq', 'fab fa-qq', '#12B7F5', 'QQ', 'qq');
+            addBtn('social_wechat', 'fab fa-weixin', '#07C160', 'WeChat', 'wechat');
+            addBtn('social_telegram', 'fab fa-telegram', '#0088cc', 'Telegram', 'tg');
+            addBtn('social_discord', 'fab fa-discord', '#5865F2', 'Discord', 'discord');
+            addBtn('social_line', 'fab fa-line', '#00C300', 'LINE', 'url');
+            addBtn('contact_email', 'fas fa-envelope', 'var(--primary-color)', 'Email', 'mail');
+
+            if(html) { 
+                document.getElementById('cs-menu').innerHTML = html; 
+                document.getElementById('cs-fab').style.display = 'flex'; 
+            }
+        }
+
+        window.copyWechatId = function(wechatId) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(wechatId).then(() => { alert((isEn ? 'WeChat ID Copied: ' : '微信号已复制: ') + wechatId + (isEn ? '\nPlease open WeChat to add.' : '\n请打开微信添加好友。')); });
+            } else {
+                let textArea = document.createElement("textarea"); textArea.value = wechatId; textArea.style.position = "fixed"; textArea.style.left = "-9999px"; document.body.appendChild(textArea); textArea.focus(); textArea.select();
+                try { document.execCommand('copy'); alert((isEn ? 'WeChat ID Copied: ' : '微信号已复制: ') + wechatId + (isEn ? '\nPlease open WeChat to add.' : '\n请打开微信添加好友。')); } catch (err) { alert((isEn ? 'WeChat ID: ' : '微信号: ') + wechatId); }
+                document.body.removeChild(textArea);
+            }
+        };
+
+        function initTheme() {
+            const saved = localStorage.getItem('site_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', saved);
+            updateThemeIcon(saved);
+        }
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('site_theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            if(icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        function initLang(){ const c=document.cookie.split(';');let h=false;for(let i of c){let[k,v]=i.trim().split('=');if(k==='site_lang'){isEn=(v==='en');h=true;}} if(!h){const l=navigator.language||navigator.userLanguage;if(l&&!l.startsWith('zh'))isEn=true;document.cookie="site_lang="+(isEn?'en':'cn')+";path=/;max-age=31536000";} updateText(); }
+        
+        function toggleLang(){ 
+            isEn=!isEn; document.cookie="site_lang="+(isEn?'en':'cn')+";path=/;max-age=31536000"; 
+            updateText(); 
+            renderCategories(); 
+            refreshData(); 
+            if(document.getElementById('modal-notice').style.display === 'block') checkNotice(); 
+        }
+        function updateText(){ 
+            document.getElementById('lang-text').innerText=isEn?'EN':'CN'; 
+            const idx=isEn?0:1; 
+            document.querySelectorAll('[data-i18n]').forEach(el=>{
+                const k=el.getAttribute('data-i18n');
+                if(i18n[k])el.innerText=i18n[k][idx];
+            }); 
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+                const k=el.getAttribute('data-i18n-placeholder');
+                if(i18n[k])el.placeholder=i18n[k][idx];
+            }); 
+            updateLoadButtonUI();
+        }
+
+        function closeModal(){ 
+            const o=document.getElementById('modal-overlay'); 
+            if(!o) return;
+            o.classList.remove('show'); 
+            setTimeout(()=>{
+                o.style.display='none'; 
+                ['login','register','profile','contact','notice'].forEach(id=>{
+                    const el=document.getElementById('modal-'+id);
+                    if(el) el.style.display='none'; 
+                });
+            },300); 
+        }
+
+        function loadGlobalSettings() {
+            fetch('api/get_config.php').then(r=>r.json()).then(res => {
+                if(res.code===200) {
+                    siteConfig = res.data;
+                    applySiteBasics(siteConfig.social);
+                    renderCategories();
+                    renderCustomerService();
+                    checkNotice(); 
+                }
+            });
+        }
+
+        function checkNotice() {
+            if (!siteConfig || !siteConfig.social) return;
+            const cfg = siteConfig.social;
+            if (cfg.notice_switch !== '1') return;
+
+            const serverVer = cfg.notice_version;
+            const localVer = localStorage.getItem('site_notice_ver');
+            
+            const modal = document.getElementById('modal-notice');
+            if (serverVer !== localVer) {
+                const content = isEn ? (cfg.notice_content_en || cfg.notice_content) : cfg.notice_content;
+                document.getElementById('notice-content').innerText = content;
+                if(modal.style.display !== 'block') {
+                    document.getElementById('modal-overlay').style.display='flex';
+                    setTimeout(()=>document.getElementById('modal-overlay').classList.add('show'),10);
+                    modal.style.display = 'block';
+                }
+            }
+        }
+
+        function closeNotice() {
+            if(siteConfig && siteConfig.social) {
+                localStorage.setItem('site_notice_ver', siteConfig.social.notice_version);
+            }
+            closeModal();
+        }
+
+        function renderCategories() {
+            if(!siteConfig || !siteConfig.categories) return;
+            const box = document.getElementById('category-container');
+            const allText = isEn ? 'All' : '全部';
+            const activeClass = (currentCat === 'ALL') ? 'active' : '';
+            let html = `<button class="cat-btn ${activeClass}" onclick="filterCat('ALL', this)">${allText}</button>`;
+            
+            categoryMap = {};
+            siteConfig.categories.forEach(c => {
+                categoryMap[c.name] = c;
+                const active = (currentCat === c.name) ? 'active' : '';
+                let showName = isEn ? (c.name_en || c.name) : c.name;
+                html += `<button class="cat-btn ${active}" onclick="filterCat('${c.name}', this)">${showName}</button>`;
+            });
+
+            const wishText = isEn ? 'Wish' : '许愿';
+            const socialText = isEn ? 'Social' : '社交媒体';
+            html += `<button class="cat-btn wish-btn" onclick="window.location.href='guestbook.html'"><i class="fas fa-star" style="margin-right:5px;"></i> <span>${wishText}</span></button>`;
+            html += `<button class="cat-btn contact-btn" onclick="openContactModal()"><i class="fas fa-hashtag" style="margin-right:5px;"></i> <span>${socialText}</span></button>`;
+            
+            box.innerHTML = html;
+        }
+
+        async function checkSession() {
+            try { const res=await fetch('api/auth.php?action=check&t='+Date.now()); const json=await res.json(); const area=document.getElementById('user-area'); if(json.code===200){let avatar=json.avatar||'static/default_avatar.png';area.innerHTML=`<img src="${avatar}" class="nav-avatar" onclick="openModal('profile')" title="My Profile">`;}else{area.innerHTML=`<button class="nav-btn" onclick="openModal('login')"><i class="fas fa-user-circle"></i> <span data-i18n="btn_login">${isEn?'Login':'登录'}</span></button>`;} } catch(e){}
+        }
+        async function doLogin() { 
+            const u=document.getElementById('login-u').value, p=document.getElementById('login-p').value; 
+            if(!u||!p)return alert('Input info'); 
+            let fd=new FormData();fd.append('username',u);fd.append('password',p); 
+            const res=await fetch('api/auth.php?action=login',{method:'POST',body:fd}); const json=await res.json(); 
+            if(json.code===200){closeModal();if(u==='admin')window.location.href='admin/index.php';else{alert('Welcome back!');checkSession();}}else alert(json.msg); 
+        }
+        
+        let codeTimer = null;
+        function sendEmailCode() {
+            const email = document.getElementById('reg-email').value.trim();
+            if(!email) return alert(isEn ? 'Please enter email' : '请输入邮箱地址');
+            
+            const btn = document.getElementById('btn-send-code');
+            btn.disabled = true;
+            btn.innerText = '发送中...';
+
+            let fd = new FormData();
+            fd.append('email', email);
+
+            fetch('api/send_code.php', { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(res => {
+                alert(res.msg);
+                if (res.code === 200) {
+                    let countdown = 60;
+                    codeTimer = setInterval(() => {
+                        countdown--;
+                        btn.innerText = countdown + 's';
+                        if (countdown <= 0) {
+                            clearInterval(codeTimer);
+                            btn.disabled = false;
+                            btn.innerText = isEn ? 'Get Code' : '获取验证码';
+                        }
+                    }, 1000);
+                } else {
+                    btn.disabled = false;
+                    btn.innerText = isEn ? 'Get Code' : '获取验证码';
+                }
+            }).catch(e => {
+                alert('网络错误 (Network Error)');
+                btn.disabled = false;
+                btn.innerText = isEn ? 'Get Code' : '获取验证码';
+            });
+        }
+
+        async function doRegister() { 
+            const u = document.getElementById('reg-u').value.trim();
+            const p = document.getElementById('reg-p').value.trim();
+            const p2 = document.getElementById('reg-p2').value.trim();
+            let fd = new FormData();
+            fd.append('username', u); fd.append('password', p); fd.append('confirm', p2);
+
+            let isEmailMode = siteConfig && siteConfig.social && siteConfig.social.reg_email_verify == '1';
+            if (isEmailMode) {
+                const email = document.getElementById('reg-email').value.trim();
+                const eCode = document.getElementById('reg-email-code').value.trim();
+                if (!u || !p || !email || !eCode) return alert(isEn ? 'Fill all fields' : '请填写完整信息');
+                fd.append('email', email); fd.append('email_code', eCode);
+            } else {
+                const c = document.getElementById('reg-code').value.trim();
+                if (!u || !p || !c) return alert(isEn ? 'Fill all fields' : '请填写完整信息');
+                fd.append('captcha', c);
+            }
+            if (p !== p2) return alert(isEn ? 'Passwords mismatch' : '两次密码不一致');
+            
+            const btn = document.querySelector('#modal-register .login-btn');
+            let oldText = btn.innerText; btn.disabled = true; btn.innerText = '...';
+
+            try {
+                const res = await fetch('api/auth.php?action=register', {method: 'POST', body: fd});
+                const json = await res.json();
+                if (json.code === 200) {
+                    alert(json.msg); closeModal(); checkSession();
+                } else {
+                    alert(json.msg);
+                    if(!isEmailMode) document.querySelector('.captcha-img').src = 'api/captcha.php?' + Math.random();
+                }
+            } catch(e) { alert("Network Error"); } finally { btn.disabled = false; btn.innerText = oldText; }
+        }
+        
+        function openModal(t){ const o=document.getElementById('modal-overlay'); o.style.display='flex'; setTimeout(()=>o.classList.add('show'),10); switchModal(t); }
+        function switchModal(t){ 
+            ['login','register','profile','contact','notice'].forEach(id=>{const el=document.getElementById('modal-'+id);if(el)el.style.display='none';}); 
+            document.getElementById('modal-'+t).style.display='block'; 
+            if(t==='profile') loadProfileData(); 
+            
+            if(t==='register') {
+                let isEmailMode = siteConfig && siteConfig.social && siteConfig.social.reg_email_verify == '1';
+                if(isEmailMode) {
+                    document.getElementById('reg-email-area').style.display = 'block';
+                    document.getElementById('reg-captcha-area').style.display = 'none';
+                } else {
+                    document.getElementById('reg-email-area').style.display = 'none';
+                    document.getElementById('reg-captcha-area').style.display = 'block';
+                }
+            }
+        }
+        
+        function loadProfileData(){ fetch('api/user_action.php?action=info').then(r=>r.json()).then(j=>{ if(j.code===200){const d=j.data; document.getElementById('mini-avatar').src=d.avatar; document.getElementById('mini-name').innerText=d.nickname||d.username; document.getElementById('mini-vip').innerText=d.vip.name; document.getElementById('mini-balance').innerText = d.wallet.balance + ' ' + d.wallet.currency; document.getElementById('mini-points').innerText=d.wallet.points; } }); }
+        function doCheckin(){ fetch('api/user_action.php?action=checkin').then(r=>r.json()).then(j=>{alert(j.msg);if(j.code===200)loadProfileData();}); }
+        function doLogout(){ if(confirm('Log out?')) fetch('api/auth.php?action=logout').then(()=>{closeModal();checkSession();}); }
+
+        function openContactModal() {
+            openModal('contact');
+            if(siteConfig && siteConfig.social) {
+                const s = siteConfig.social;
+                let html = '';
+                const processLink = (val) => {
+                    if (!val) return '';
+                    val = val.trim();
+                    if (val.startsWith('http://') || val.startsWith('https://')) return val;
+                    return 'https://' + val;
+                };
+
+                if(s.social_tiktok) html += `<a href="${processLink(s.social_tiktok)}" target="_blank" class="social-btn s-tiktok"><i class="fab fa-tiktok"></i></a>`;
+                if(s.social_instagram) html += `<a href="${processLink(s.social_instagram)}" target="_blank" class="social-btn s-ins"><i class="fab fa-instagram"></i></a>`;
+                if(s.social_facebook) html += `<a href="${processLink(s.social_facebook)}" target="_blank" class="social-btn s-facebook" style="color:#1877F2; border-color:#1877F2"><i class="fab fa-facebook"></i></a>`;
+                if(s.social_youtube) html += `<a href="${processLink(s.social_youtube)}" target="_blank" class="social-btn s-youtube"><i class="fab fa-youtube"></i></a>`;
+                if(s.social_xhs) html += `<a href="${processLink(s.social_xhs)}" target="_blank" class="social-btn s-xhs"><i class="fas fa-book"></i></a>`;
+                if(s.social_douyin) html += `<a href="${processLink(s.social_douyin)}" target="_blank" class="social-btn s-douyin"><i class="fas fa-music"></i></a>`;
+                if(s.social_bilibili) html += `<a href="${processLink(s.social_bilibili)}" target="_blank" class="social-btn s-bili"><i class="fab fa-bilibili"></i></a>`;
+                
+                document.getElementById('social-grid').innerHTML = html || '<div style="width:100%;text-align:center;color:#eee">暂无配置</div>';
+            }
+        }
+
+        function handleSearch(e){ if(e.key==='Enter'){ currentQuery=e.target.value; refreshData(); } }
+        
+        function filterCat(c, b){ 
+            currentCat = c; 
+            document.querySelectorAll('.cat-btn').forEach(el=>el.classList.remove('active')); 
+            if(b) b.classList.add('active'); 
+            
+            let targetCat = categoryMap[c];
+            if (targetCat && targetCat.type === 'single_page') {
+                document.getElementById('content-grid').style.display = 'none';
+                document.getElementById('load-more-wrapper').style.display = 'none';
+                document.getElementById('single-page-container').style.display = 'block';
+                let contentHTML = isEn ? (targetCat.content_en || targetCat.content) : targetCat.content;
+                document.getElementById('single-page-container').innerHTML = contentHTML || '<div style="text-align:center;color:#999;padding:50px;">暂无内容 (No Content)</div>';
+            } else {
+                document.getElementById('single-page-container').style.display = 'none';
+                document.getElementById('content-grid').style.display = 'grid';
+                document.getElementById('load-more-wrapper').style.display = 'flex';
+                refreshData(); 
+            }
+        }
+        
+        function refreshData(){ currentPage=1; currentList=[]; document.getElementById('content-grid').innerHTML=''; loadData(); }
+        function loadNextPage(){ currentPage++; loadData(); }
+        
+        let currentLoadState = 'load'; 
+        function updateLoadButtonUI() {
+            const btn = document.getElementById('load-more-btn');
+            const spinner = document.getElementById('load-spinner');
+            const textEl = document.getElementById('load-text');
+            const idx = isEn ? 0 : 1;
+            
+            if (currentLoadState === 'loading') {
+                btn.classList.add('disabled'); btn.onclick = null; spinner.style.display = 'inline-block'; textEl.innerText = i18n['btn_loading'][idx];
+            } else if (currentLoadState === 'nomore') {
+                btn.classList.add('disabled'); btn.onclick = null; spinner.style.display = 'none'; textEl.innerText = i18n['btn_no_more'][idx];
+            } else {
+                btn.classList.remove('disabled'); btn.onclick = loadNextPage; spinner.style.display = 'none'; textEl.innerText = i18n['btn_load_more'][idx];
+            }
+        }
+
+        async function loadData() {
+            currentLoadState = 'loading';
+            updateLoadButtonUI();
+            try {
+                let url=`api/get_articles.php?page=${currentPage}&limit=18&category=${encodeURIComponent(currentCat)}`;
+                if(currentQuery) url+=`&q=${encodeURIComponent(currentQuery)}`;
+                const res=await fetch(url); const json=await res.json();
+                if(json.code===200){
+                    if(currentPage===1) currentList=json.data; else currentList=currentList.concat(json.data);
+                    renderCards(json.data);
+                    currentLoadState = json.hasMore ? 'load' : 'nomore';
+                    updateLoadButtonUI();
+                }
+            } catch(e) { 
+                currentLoadState = 'load';
+                updateLoadButtonUI();
+                document.getElementById('load-text').innerText = 'Network Error'; 
+            }
+        }
+
+        function renderCards(list) {
+            const box=document.getElementById('content-grid');
+            list.forEach(item => {
+                let title=(isEn&&item.title_en)?item.title_en:item.title;
+                let originalCover=item.cover||'static/default_cover.png';
+                let thumbCover=originalCover.startsWith('/uploads/') ? originalCover.replace(/\.[^/.]+$/, "")+"_thumb.jpg" : originalCover;
+                
+                let rawCatName = item.category;
+                let catDisplay = rawCatName;
+                if (categoryMap[rawCatName]) { catDisplay = isEn ? (categoryMap[rawCatName].name_en || categoryMap[rawCatName].name) : categoryMap[rawCatName].name; } 
+                
+                let typeIcon = (item.type === 'wallpaper') ? '📱' : '📝';
+                let dateStr = item.created_at.substring(0, 10);
+
+                let html=`
+                <div class="card-item" onclick="window.location.href='detail.html?id=${item.id}'">
+                    <img src="${thumbCover}" 
+                         data-s="${thumbCover}" 
+                         data-a="${originalCover}" 
+                         class="card-img" 
+                         loading="lazy" 
+                         onerror="this.src='${originalCover}';this.onerror=null;"
+                         onmouseenter="this.src=this.dataset.a"
+                         onmouseleave="this.src=this.dataset.s"
+                         ontouchstart="this.src=this.dataset.a"
+                         ontouchend="this.src=this.dataset.s"
+                         oncontextmenu="return false;">
+                    <div class="card-price">${item.price_display}</div>
+                    <div class="glass-deck">
+                        <div class="card-title">${title}</div>
+                        <div class="card-meta">
+                            <span>${typeIcon} ${catDisplay}</span>
+                            <span style="font-size:10px;opacity:0.8">${dateStr}</span>
+                        </div>
+                    </div>
+                </div>`;
+                box.insertAdjacentHTML('beforeend', html);
+            });
+        }
+        function initRain(){const c=document.getElementById('rain-canvas'),ctx=c.getContext('2d');let w,h,drops=[];function rz(){w=c.width=window.innerWidth;h=c.height=window.innerHeight;}window.addEventListener('resize',rz);rz();class D{constructor(){this.init()}init(){this.x=Math.random()*w;this.y=Math.random()*-h;this.v=Math.random()*4+3;this.l=Math.random()*15+5;this.a=Math.random()*0.2+0.1;}up(){this.y+=this.v;if(this.y>h)this.init()}dr(){ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x,this.y+this.l);ctx.strokeStyle=`rgba(120,120,130,${this.a})`;ctx.lineWidth=1.5;ctx.stroke();}}for(let i=0;i<120;i++)drops.push(new D());function anim(){ctx.clearRect(0,0,w,h);drops.forEach(d=>{d.up();d.dr()});requestAnimationFrame(anim);}anim();}
+        
+        let pageStartTime = Date.now();
+        let trackInterval = null;
+
+        window.addEventListener('load', function() {
+            const fd = new FormData(); fd.append('url', window.location.href);
+            fetch('api/track.php', { method: 'POST', body: fd }).catch(e => {});
+            trackInterval = setInterval(() => {
+                let currentDuration = Math.floor((Date.now() - pageStartTime) / 1000);
+                const updateFd = new FormData(); updateFd.append('action', 'update_duration'); updateFd.append('url', window.location.href); updateFd.append('duration', currentDuration);
+                fetch('api/track.php', { method: 'POST', body: updateFd, keepalive: true }).catch(() => {});
+            }, 5000);
+        });
+        
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                let finalDuration = Math.floor((Date.now() - pageStartTime) / 1000);
+                const finalFd = new FormData(); finalFd.append('action', 'update_duration'); finalFd.append('url', window.location.href); finalFd.append('duration', finalDuration);
+                navigator.sendBeacon('api/track.php', finalFd);
+            }
+        });
+    </script>
+</body>
+</html>

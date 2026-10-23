@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                                                               ║
+  ║                         CAPlayground                          ║
+  ║                                                               ║
+  ║      Create beautiful Core Animation wallpapers for iOS       ║
+  ║                                                               ║
+  ║          Website: https://caplayground.vercel.app             ║
+  ║                                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                                                               ║
+  ║                         CAPlayground                          ║
+  ║                                                               ║
+  ║      Create beautiful Core Animation wallpapers for iOS       ║
+  ║                                                               ║
+  ║          Website: https://caplayground.vercel.app             ║
+  ║                                                               ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
+<caml xmlns="http://www.apple.com/CoreAnimation/1.0">
+  <CALayer id="__capRootLayer__" name="CAPlayground Root Layer" bounds="0 0 390 844" position="195 422" zPosition="0" geometryFlipped="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+    <sublayers>
+      <CALayer id="1774979300002" name="Root Layer" bounds="0 0 390 844" position="195 422" zPosition="0" geometryFlipped="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+        <sublayers>
+          <CALayer id="vfucikrx6nnmnewurt9" name="buou.png 1" bounds="0 0 155 405" position="195.27970140000002 318.8431511" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/buou.png"/>
+            </contents>
+            <animations>
+              <animation key="animation-0" type="CAKeyframeAnimation" keyPath="position.y" autoreverses="1" beginTime="1e-100" duration="8" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <integer value="313"/>
+                  <integer value="340"/>
+                </values>
+              </animation>
+            </animations>
+          </CALayer>
+          <CALayer id="cexxuaza4w8mnewuzqs" name="qiu.png 1" bounds="0 0 145 145" position="162.05360979999995 583.5570081000001" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/qiu.png"/>
+            </contents>
+            <animations>
+              <animation key="animation-0" type="CAKeyframeAnimation" keyPath="position.y" autoreverses="1" beginTime="1e-100" duration="8" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <integer value="647"/>
+                  <integer value="670"/>
+                </values>
+              </animation>
+              <p key="animation-1" type="CAKeyframeAnimation" keyPath="transform.rotation.z" autoreverses="1" beginTime="1e-100" duration="7" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <real value="0.15707963267948966"/>
+                  <real value="0"/>
+                  <real value="-0.15707963267948966"/>
+                </values>
+              </p>
+            </animations>
+          </CALayer>
+          <CALayer id="vvb4kay4sadmnex5bh0" name="wtksoi (5).png 1" bounds="0 0 87 140" position="214.6023513 338.7847651" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/wtksoi_5_.png"/>
+            </contents>
+            <animations>
+              <animation key="animation-0" type="CAKeyframeAnimation" keyPath="position.y" autoreverses="1" beginTime="1e-100" duration="6" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <integer value="416"/>
+                  <integer value="471"/>
+                </values>
+              </animation>
+            </animations>
+          </CALayer>
+          <CALayer id="eqzz6icwuxnmnex4iif" name="wtksoi (4).png 1" bounds="0 0 85 137" position="162.086658 452.87739109999995" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/wtksoi_4_.png"/>
+            </contents>
+            <animations>
+              <animation key="animation-0" type="CAKeyframeAnimation" keyPath="position.y" autoreverses="1" beginTime="1e-100" duration="5" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <integer value="462"/>
+                  <integer value="497"/>
+                </values>
+              </animation>
+              <p key="animation-1" type="CAKeyframeAnimation" keyPath="transform.rotation.z" autoreverses="1" beginTime="1e-100" duration="6" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <real value="-0.2617993877991494"/>
+                  <real value="0"/>
+                  <real value="0.13962634015954636"/>
+                </values>
+              </p>
+            </animations>
+          </CALayer>
+          <CALayer id="yac38sg6yeomnex3aao" name="wtksoi-(1).png 1" bounds="0 0 287 487" position="195.3057069 534.0067357" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/wtksoi-_1_.png"/>
+            </contents>
+            <animations>
+              <animation key="animation-0" type="CAKeyframeAnimation" keyPath="position.y" autoreverses="1" beginTime="1e-100" duration="10" speed="1" removedOnCompletion="0" repeatCount="inf" repeatDuration="inf" calculationMode="linear" timingFunction="linear">
+                <values>
+                  <integer value="363"/>
+                  <integer value="426"/>
+                </values>
+              </animation>
+            </animations>
+          </CALayer>
+          <CALayer id="rxkdde04z3emnex3p38" name="wtksoi (2).png 1" bounds="0 0 155 265" position="97.7691201 397.2081655" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/wtksoi_2_.png"/>
+            </contents>
+          </CALayer>
+          <CALayer id="ifxhb91zqzjmnex3xdv" name="wtksoi (3).png 1" bounds="0 0 112 262" position="300.3206855 380.04458150000005" zPosition="0" geometryFlipped="0" masksToBounds="0" opacity="1" transform.rotation.z="0" transform.rotation.x="0" transform.rotation.y="0" transform="rotate(0deg) rotate(0deg, 0, 1, 0) rotate(0deg, 1, 0, 0)" cornerRadius="0" allowsEdgeAntialiasing="1" allowsGroupOpacity="1" contentsFormat="RGBA8" cornerCurve="circular">
+            <contents>
+              <CGImage src="assets/wtksoi_3_.png"/>
+            </contents>
+          </CALayer>
+        </sublayers>
+      </CALayer>
+    </sublayers>
+    <modules/>
+    <states>
+      <LKState name="Locked">
+        <elements>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="position.x">
+            <value type="integer" value="197"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="position.y">
+            <value type="integer" value="340"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="bounds.size.width">
+            <value type="integer" value="204"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="bounds.size.height">
+            <value type="integer" value="533"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="position.x">
+            <value type="integer" value="166"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="position.y">
+            <value type="integer" value="692"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="bounds.size.width">
+            <value type="integer" value="135"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="bounds.size.height">
+            <value type="integer" value="135"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="position.x">
+            <value type="integer" value="-233"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="position.y">
+            <value type="integer" value="234"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="position.x">
+            <value type="integer" value="616"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="position.y">
+            <value type="integer" value="202"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="position.x">
+            <value type="integer" value="173"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="position.y">
+            <value type="integer" value="583"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="bounds.size.width">
+            <value type="integer" value="4"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="bounds.size.height">
+            <value type="integer" value="7"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="opacity">
+            <value type="integer" value="0"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="position.x">
+            <value type="integer" value="-122"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="position.y">
+            <value type="integer" value="87"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="position.x">
+            <value type="integer" value="616"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="position.y">
+            <value type="integer" value="56"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="bounds.size.width">
+            <value type="integer" value="46"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="bounds.size.height">
+            <value type="integer" value="79"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="bounds.size.width">
+            <value type="integer" value="23"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="bounds.size.height">
+            <value type="integer" value="54"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="bounds.size.width">
+            <value type="integer" value="39"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="bounds.size.height">
+            <value type="integer" value="63"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="bounds.size.width">
+            <value type="integer" value="29"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="bounds.size.height">
+            <value type="integer" value="47"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+      <LKState name="Unlock">
+        <elements>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="position.x">
+            <value type="integer" value="196"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="position.y">
+            <value type="integer" value="409"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="bounds.size.width">
+            <value type="integer" value="4"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="bounds.size.height">
+            <value type="integer" value="11"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="opacity">
+            <value type="integer" value="0"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="position.x">
+            <value type="integer" value="181"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="position.y">
+            <value type="integer" value="428"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="bounds.size.width">
+            <value type="integer" value="1821"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="bounds.size.height">
+            <value type="integer" value="1821"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="opacity">
+            <value type="integer" value="0"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="position.x">
+            <value type="integer" value="85"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="position.y">
+            <value type="integer" value="252"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="position.x">
+            <value type="integer" value="322"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="position.y">
+            <value type="integer" value="241"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="position.x">
+            <value type="integer" value="198"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="position.y">
+            <value type="integer" value="426"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="bounds.size.width">
+            <value type="integer" value="287"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="bounds.size.height">
+            <value type="integer" value="487"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="position.x">
+            <value type="integer" value="91"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="position.y">
+            <value type="integer" value="497"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="position.x">
+            <value type="integer" value="318"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="position.y">
+            <value type="integer" value="471"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="bounds.size.width">
+            <value type="integer" value="155"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="bounds.size.height">
+            <value type="integer" value="265"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="bounds.size.width">
+            <value type="integer" value="112"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="bounds.size.height">
+            <value type="integer" value="262"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="bounds.size.width">
+            <value type="integer" value="87"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="bounds.size.height">
+            <value type="integer" value="140"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="bounds.size.width">
+            <value type="integer" value="85"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="bounds.size.height">
+            <value type="integer" value="137"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+      <LKState name="Sleep">
+        <elements>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="position.y">
+            <value type="integer" value="319"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="bounds.size.width">
+            <value type="integer" value="155"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="bounds.size.height">
+            <value type="integer" value="405"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vfucikrx6nnmnewurt9" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="position.x">
+            <value type="integer" value="162"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="position.y">
+            <value type="integer" value="584"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="bounds.size.width">
+            <value type="integer" value="145"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="bounds.size.height">
+            <value type="integer" value="145"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="cexxuaza4w8mnewuzqs" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="position.x">
+            <value type="integer" value="98"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="position.y">
+            <value type="integer" value="397"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="position.x">
+            <value type="integer" value="300"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="position.y">
+            <value type="integer" value="380"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="position.x">
+            <value type="integer" value="195"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="position.y">
+            <value type="integer" value="534"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="bounds.size.width">
+            <value type="integer" value="287"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="bounds.size.height">
+            <value type="integer" value="487"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="yac38sg6yeomnex3aao" keyPath="opacity">
+            <value type="integer" value="1"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="position.x">
+            <value type="integer" value="162"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="position.y">
+            <value type="integer" value="453"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="position.x">
+            <value type="integer" value="215"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="position.y">
+            <value type="integer" value="339"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="bounds.size.width">
+            <value type="integer" value="155"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="rxkdde04z3emnex3p38" keyPath="bounds.size.height">
+            <value type="integer" value="265"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="bounds.size.width">
+            <value type="integer" value="112"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="ifxhb91zqzjmnex3xdv" keyPath="bounds.size.height">
+            <value type="integer" value="262"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="bounds.size.width">
+            <value type="integer" value="87"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="vvb4kay4sadmnex5bh0" keyPath="bounds.size.height">
+            <value type="integer" value="140"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="bounds.size.width">
+            <value type="integer" value="85"/>
+          </LKStateSetValue>
+          <LKStateSetValue targetId="eqzz6icwuxnmnex4iif" keyPath="bounds.size.height">
+            <value type="integer" value="137"/>
+          </LKStateSetValue>
+        </elements>
+      </LKState>
+    </states>
+    <stateTransitions>
+      <LKStateTransition fromState="*" toState="Locked">
+        <elements>
+          <LKStateTransitionElement targetId="vfucikrx6nnmnewurt9" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="cexxuaza4w8mnewuzqs" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="yac38sg6yeomnex3aao" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="Locked" toState="*">
+        <elements>
+          <LKStateTransitionElement targetId="vfucikrx6nnmnewurt9" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="cexxuaza4w8mnewuzqs" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="yac38sg6yeomnex3aao" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Unlock">
+        <elements>
+          <LKStateTransitionElement targetId="vfucikrx6nnmnewurt9" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="cexxuaza4w8mnewuzqs" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="yac38sg6yeomnex3aao" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="Unlock" toState="*">
+        <elements>
+          <LKStateTransitionElement targetId="vfucikrx6nnmnewurt9" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="cexxuaza4w8mnewuzqs" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="yac38sg6yeomnex3aao" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="*" toState="Sleep">
+        <elements>
+          <LKStateTransitionElement targetId="vfucikrx6nnmnewurt9" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="cexxuaza4w8mnewuzqs" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="yac38sg6yeomnex3aao" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+      <LKStateTransition fromState="Sleep" toState="*">
+        <elements>
+          <LKStateTransitionElement targetId="vfucikrx6nnmnewurt9" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="cexxuaza4w8mnewuzqs" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+          <LKStateTransitionElement targetId="yac38sg6yeomnex3aao" key="opacity">
+            <animation type="CASpringAnimation" damping="50" mass="2" stiffness="300" velocity="0" duration="0.8" fillMode="backwards" keyPath="opacity" mica_autorecalculatesDuration="1"/>
+          </LKStateTransitionElement>
+        </elements>
+      </LKStateTransition>
+    </stateTransitions>
+  </CALayer>
+</caml>

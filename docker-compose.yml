@@ -1,0 +1,72 @@
+services:
+  # 1. Go Backend API
+  wallpaper-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wallpaper-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DB_PATH=/app/wallpaper.db
+      - APP_BASE_URL=https://wallpaper.icangoanyway.com
+      - JWT_SECRET=wallart-super-secret-jwt-token-2026
+      - PAYPAL_MODE=sandbox
+    volumes:
+      - ./backend/wallpaper.db:/app/wallpaper.db
+      - ./backend/uploads:/app/uploads
+    networks:
+      - wallpaper-net
+
+  # 2. Uni-app Multi-Terminal Frontend (H5 & PC Web)
+  wallpaper-app:
+    build:
+      context: ./uni-app
+      dockerfile: Dockerfile
+    container_name: wallpaper-app
+    restart: unless-stopped
+    depends_on:
+      - wallpaper-backend
+    ports:
+      - "5173:80"
+    networks:
+      - wallpaper-net
+
+  # 3. Dedicated Admin Dashboard (Vue 3 SPA)
+  wallpaper-admin:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: wallpaper-admin
+    restart: unless-stopped
+    depends_on:
+      - wallpaper-backend
+    ports:
+      - "5174:80"
+    networks:
+      - wallpaper-net
+
+  # 4. Unified Port 80 & 443 Reverse Proxy Gateway (ios & admin subdomains)
+  wallpaper-gateway:
+    image: nginx:alpine
+    container_name: wallpaper-gateway
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./gateway.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./certbot-www:/var/www/certbot:ro
+    depends_on:
+      - wallpaper-app
+      - wallpaper-admin
+      - wallpaper-backend
+    networks:
+      - wallpaper-net
+
+networks:
+  wallpaper-net:
+    driver: bridge

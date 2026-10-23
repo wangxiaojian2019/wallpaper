@@ -1,0 +1,57 @@
+# Databases & Sensitive Data
+*.db
+*.db-journal
+wallpaper.db
+backend/wallpaper.db
+*.sqlite
+*.sqlite3
+
+# Binaries & Compiled Executables
+*.exe
+wallpaper-server.exe
+wallpaper-server-linux
+backend/wallpaper-server-linux
+backend/wallpaper-server.exe
+backend/.cache/
+.gocache/
+*.o
+*.a
+*.so
+
+# Uploaded media assets (850MB+ media files)
+backend/uploads/*
+!backend/uploads/.gitkeep
+uploads/
+
+# Packages & Release Archives
+wallpaper-docker-prod.zip
+*.zip
+*.tar
+*.gz
+release-staging/
+
+# SSL Certificates & Private Keys
+ssl/
+certbot-etc/
+certbot-www/.well-known/
+*.pem
+*.key
+*.crt
+*.csr
+
+# Dependencies & Build Artefacts
+node_modules/
+dist/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
